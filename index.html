@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيق القروض</title>
+    <title>تطبيق القروض - الرابط</title>
     <style>
         * {
             margin: 0;
@@ -15,38 +15,87 @@
             font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             padding: 20px;
         }
 
+        /* ===== شريط التنقل (Navbar) ===== */
+        nav {
+            background: linear-gradient(135deg, #0f2438 0%, #1a3a52 100%);
+            padding: 15px 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-nav {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            color: white;
+        }
+
+        /* ===== الكونتينر الرئيسي ===== */
         .container {
-            width: 100%;
-            max-width: 400px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         /* ===== صفحة البداية ===== */
-        #home-page {
+        .hero {
             text-align: center;
+            padding: 80px 20px;
+            color: white;
             animation: fadeIn 0.5s ease-in;
         }
 
-        .logo {
-            color: white;
-            font-size: 32px;
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 18px;
             margin-bottom: 40px;
-            font-weight: bold;
+            color: #b3d9ff;
         }
 
         .button-group {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         .btn {
-            padding: 15px 30px;
+            padding: 15px 40px;
             font-size: 16px;
             border: none;
             border-radius: 8px;
@@ -64,8 +113,8 @@
 
         .btn-primary:hover {
             background: linear-gradient(135deg, #0052a3 0%, #003d7a 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 102, 204, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 102, 204, 0.4);
         }
 
         .btn-secondary {
@@ -75,22 +124,29 @@
 
         .btn-secondary:hover {
             background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(77, 148, 255, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(77, 148, 255, 0.4);
         }
 
         /* ===== صفحة تسجيل الدخول ===== */
-        #login-page {
+        .form-container {
+            max-width: 450px;
+            margin: 50px auto;
             background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
-            padding: 40px 30px;
+            padding: 40px;
             border-radius: 15px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
             animation: slideUp 0.5s ease-in;
+            display: none;
+        }
+
+        .form-container.active {
+            display: block;
         }
 
         .form-title {
             color: white;
-            font-size: 24px;
+            font-size: 28px;
             margin-bottom: 30px;
             text-align: center;
             font-weight: bold;
@@ -111,7 +167,7 @@
         input[type="email"],
         input[type="password"],
         input[type="text"],
-        input[type="tel"] {
+        input[type="number"] {
             width: 100%;
             padding: 12px 15px;
             border: 2px solid #4d94ff;
@@ -125,14 +181,14 @@
         input[type="email"]:focus,
         input[type="password"]:focus,
         input[type="text"]:focus,
-        input[type="tel"]:focus {
+        input[type="number"]:focus {
             outline: none;
             border-color: #0066cc;
             box-shadow: 0 0 10px rgba(0, 102, 204, 0.3);
             background-color: white;
         }
 
-        .signin-btn {
+        .form-btn {
             width: 100%;
             padding: 12px;
             background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
@@ -146,7 +202,7 @@
             margin-top: 20px;
         }
 
-        .signin-btn:hover {
+        .form-btn:hover {
             background: linear-gradient(135deg, #0052a3 0%, #003d7a 100%);
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 102, 204, 0.4);
@@ -172,78 +228,26 @@
             text-decoration: underline;
         }
 
-        .back-btn {
-            width: 100%;
-            padding: 10px;
-            background: linear-gradient(135deg, #4d94ff 0%, #0066cc 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            cursor: pointer;
-            margin-top: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .back-btn:hover {
-            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
-            transform: translateY(-2px);
-        }
-
-        /* ===== صفحة التسجيل ===== */
-        #signup-page {
-            background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
-            padding: 40px 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.5s ease-in;
-        }
-
-        .next-btn {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 20px;
-        }
-
-        .next-btn:hover {
-            background: linear-gradient(135deg, #0052a3 0%, #003d7a 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 102, 204, 0.4);
-        }
-
         /* ===== صفحة تقديم الطلب ===== */
-        #loan-page {
+        .loan-form-container {
+            max-width: 500px;
+            margin: 50px auto;
             background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
-            padding: 40px 30px;
+            padding: 40px;
             border-radius: 15px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
             animation: slideUp 0.5s ease-in;
+            display: none;
         }
 
-        #order-page {
-            background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
-            padding: 40px 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            animation: slideUp 0.5s ease-in;
+        .loan-form-container.active {
+            display: block;
         }
 
         /* ===== الرسوم المتحركة ===== */
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         @keyframes slideUp {
@@ -257,50 +261,80 @@
             }
         }
 
-        .hidden {
-            display: none !important;
+        /* ===== الفوتر ===== */
+        footer {
+            background: linear-gradient(135deg, #0f2438 0%, #1a3a52 100%);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 60px;
+            border-radius: 10px;
         }
 
         /* ===== استجابة الهاتف ===== */
-        @media (max-width: 480px) {
-            .container {
-                max-width: 100%;
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 15px;
             }
 
-            #login-page,
-            #signup-page,
-            #loan-page,
-            #order-page {
-                padding: 30px 20px;
-                border-radius: 10px;
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
             }
 
-            .form-title {
-                font-size: 20px;
-                margin-bottom: 25px;
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .button-group {
+                flex-direction: column;
             }
 
             .btn {
-                padding: 12px 25px;
-                font-size: 14px;
+                width: 100%;
+            }
+
+            .form-container,
+            .loan-form-container {
+                max-width: 100%;
+                margin: 30px 20px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== صفحة البداية ===== -->
+    <!-- ===== شريط التنقل ===== -->
+    <nav>
+        <div class="logo-nav">💳 تطبيق القروض</div>
+        <ul class="nav-links">
+            <li><a href="#" class="nav-link" onclick="showHome(); return false;">الرئيسية</a></li>
+            <li><a href="#" class="nav-link" onclick="showLogin(); return false;">دخول</a></li>
+            <li><a href="#" class="nav-link" onclick="showLoan(); return false;">تقديم قرض</a></li>
+        </ul>
+    </nav>
+
     <div class="container">
-        <div id="home-page">
-            <div class="logo">💳 تطبيق القروض</div>
-            <div class="button-group">
-                <button class="btn btn-primary" onclick="showLoginPage()">دخول</button>
-                <button class="btn btn-secondary" onclick="showLoanPage()">تقديم طلب قرض</button>
+
+        <!-- ===== صفحة البداية ===== -->
+        <div id="home" class="active">
+            <div class="hero">
+                <h1>مرحباً بك في تطبيق القروض</h1>
+                <p>احصل على قرضك بسهولة وسرعة من خلال منصتنا الموثوقة</p>
+                <div class="button-group">
+                    <a href="#" class="btn btn-primary" onclick="showLogin(); return false;">دخول إلى الحساب</a>
+                    <a href="#" class="btn btn-secondary" onclick="showLoan(); return false;">تقديم طلب قرض</a>
+                </div>
             </div>
         </div>
 
         <!-- ===== صفحة تسجيل الدخول ===== -->
-        <div id="login-page" class="hidden">
+        <div id="login-form" class="form-container">
             <h2 class="form-title">تسجيل الدخول</h2>
             <form onsubmit="handleLogin(event)">
                 <div class="form-group">
@@ -313,34 +347,17 @@
                     <input type="password" id="login-password" placeholder="أدخل كلمة المرور" required>
                 </div>
 
-                <button type="submit" class="signin-btn">دخول</button>
+                <button type="submit" class="form-btn">دخول</button>
             </form>
 
             <div class="signup-link">
                 هل أنت جديد؟
-                <a onclick="showSignupPage()">إنشاء حساب</a>
+                <a onclick="showSignup()">إنشاء حساب</a>
             </div>
-
-            <button class="back-btn" onclick="showHomePage()">← عودة</button>
         </div>
 
-        <!-- ===== صفحة التسجيل ===== -->
-        <!-- ===== صفحة إدخال رقم الطلب ===== -->
-        <div id="order-page" class="hidden">
-            <h2 class="form-title">&#1571;&#1583;&#1582;&#1604; &#1585;&#1602;&#1605; &#1575;&#1604;&#1591;&#1604;&#1576;</h2>
-            <form onsubmit="handleOrderNumber(event)">
-                <div class="form-group">
-                    <label for="order-number">&#1585;&#1602;&#1605; &#1575;&#1604;&#1591;&#1604;&#1576;</label>
-                    <input type="tel" id="order-number" placeholder="&#1571;&#1583;&#1582;&#1604; &#1585;&#1602;&#1605; &#1575;&#1604;&#1591;&#1604;&#1576;" required>
-                </div>
-
-                <button type="submit" class="signin-btn">&#1605;&#1578;&#1575;&#1576;&#1593;&#1577;</button>
-            </form>
-
-            <button class="back-btn" onclick="showHomePage()">&#8592; &#1593;&#1608;&#1583;&#1577;</button>
-        </div>
-
-        <div id="signup-page" class="hidden">
+        <!-- ===== صفحة إنشاء حساب ===== -->
+        <div id="signup-form" class="form-container">
             <h2 class="form-title">إنشاء حساب جديد</h2>
             <form onsubmit="handleSignup(event)">
                 <div class="form-group">
@@ -348,14 +365,12 @@
                     <input type="email" id="signup-email" placeholder="أدخل بريدك الإلكتروني" required>
                 </div>
 
-                <button type="submit" class="next-btn">التالي →</button>
+                <button type="submit" class="form-btn">التالي →</button>
             </form>
-
-            <button class="back-btn" onclick="showLoginPage()">← عودة</button>
         </div>
 
         <!-- ===== صفحة تقديم طلب القرض ===== -->
-        <div id="loan-page" class="hidden">
+        <div id="loan-form" class="loan-form-container">
             <h2 class="form-title">تقديم طلب قرض</h2>
             <form onsubmit="handleLoanRequest(event)">
                 <div class="form-group">
@@ -364,86 +379,92 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="loan-amount">مبلغ القرض</label>
-                    <input type="text" id="loan-amount" placeholder="أدخل المبلغ المطلوب" required>
+                    <label for="loan-amount">مبلغ القرض المطلوب</label>
+                    <input type="number" id="loan-amount" placeholder="أدخل المبلغ (بالدولار)" required>
                 </div>
 
-                <button type="submit" class="signin-btn">إرسال الطلب</button>
-            </form>
+                <div class="form-group">
+                    <label for="loan-period">مدة السداد (بالأشهر)</label>
+                    <input type="number" id="loan-period" placeholder="أدخل عدد الأشهر" required>
+                </div>
 
-            <button class="back-btn" onclick="showHomePage()">← عودة</button>
+                <button type="submit" class="form-btn">إرسال الطلب</button>
+            </form>
         </div>
+
     </div>
 
+    <!-- ===== الفوتر ===== -->
+    <footer>
+        <p>&copy; 2024 تطبيق القروض. جميع الحقوق محفوظة.</p>
+    </footer>
+
     <script>
-        // ===== دوال التنقل بين الصفحات =====
-        function showHomePage() {
-            hideAllPages();
-            document.getElementById('home-page').classList.remove('hidden');
+        // ===== دوال التنقل =====
+        function showHome() {
+            hideAll();
+            document.getElementById('home').style.display = 'block';
+            updateNav('');
         }
 
-        function showLoginPage() {
-            hideAllPages();
-            document.getElementById('login-page').classList.remove('hidden');
+        function showLogin() {
+            hideAll();
+            document.getElementById('login-form').classList.add('active');
+            updateNav('login');
         }
 
-        function showSignupPage() {
-            hideAllPages();
-            document.getElementById('signup-page').classList.remove('hidden');
+        function showSignup() {
+            hideAll();
+            document.getElementById('signup-form').classList.add('active');
+            updateNav('signup');
         }
 
-        function showOrderPage() {
-            hideAllPages();
-            document.getElementById('order-page').classList.remove('hidden');
+        function showLoan() {
+            hideAll();
+            document.getElementById('loan-form').classList.add('active');
+            updateNav('loan');
         }
 
-        function showLoanPage() {
-            hideAllPages();
-            document.getElementById('loan-page').classList.remove('hidden');
+        function hideAll() {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('login-form').classList.remove('active');
+            document.getElementById('signup-form').classList.remove('active');
+            document.getElementById('loan-form').classList.remove('active');
         }
 
-        function hideAllPages() {
-            document.getElementById('home-page').classList.add('hidden');
-            document.getElementById('login-page').classList.add('hidden');
-            document.getElementById('order-page').classList.add('hidden');
-            document.getElementById('signup-page').classList.add('hidden');
-            document.getElementById('loan-page').classList.add('hidden');
+        function updateNav(page) {
+            const links = document.querySelectorAll('.nav-link');
+            links.forEach(link => link.classList.remove('active'));
         }
 
         // ===== معالجة النماذج =====
         function handleLogin(event) {
             event.preventDefault();
             const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            alert(`تم تسجيل الدخول بنجاح!\nالبريد: ${email}`);
-            showOrderPage();
+            alert(`✅ تم تسجيل الدخول بنجاح!\n${email}`);
             document.getElementById('login-email').value = '';
             document.getElementById('login-password').value = '';
-        }
-
-        function handleOrderNumber(event) {
-            event.preventDefault();
-            const orderNumber = document.getElementById('order-number').value;
-            alert(`تم إدخال رقم الطلب: ${orderNumber}`);
-            document.getElementById('order-number').value = '';
+            showHome();
         }
 
         function handleSignup(event) {
             event.preventDefault();
             const email = document.getElementById('signup-email').value;
-            alert(`تم إنشاء الحساب بنجاح!\nالبريد: ${email}`);
-            showLoginPage();
+            alert(`✅ تم إنشاء حسابك بنجاح!\n${email}`);
             document.getElementById('signup-email').value = '';
+            showLogin();
         }
 
         function handleLoanRequest(event) {
             event.preventDefault();
             const email = document.getElementById('loan-email').value;
             const amount = document.getElementById('loan-amount').value;
-            alert(`تم إرسال طلب القرض بنجاح!\nالبريد: ${email}\nالمبلغ: ${amount}`);
-            showHomePage();
+            const period = document.getElementById('loan-period').value;
+            alert(`✅ تم إرسال طلب القرض بنجاح!\n\nالبريد: ${email}\nالمبلغ: $${amount}\nالمدة: ${period} شهر`);
             document.getElementById('loan-email').value = '';
             document.getElementById('loan-amount').value = '';
+            document.getElementById('loan-period').value = '';
+            showHome();
         }
     </script>
 

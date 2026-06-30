@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطبيق القروض - الأدمن</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* ===== شريط التنقل (Navbar) ===== */
+        nav {
+            background: linear-gradient(135deg, #0f2438 0%, #1a3a52 100%);
+            padding: 15px 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-nav {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            color: white;
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, #cc0000 0%, #990000 100%);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: linear-gradient(135deg, #990000 0%, #660000 100%);
+            transform: translateY(-2px);
+        }
+
+        /* ===== الكونتينر الرئيسي ===== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* ===== صفحة البيانات ===== */
+        .admin-page {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .page-title {
+            color: white;
+            font-size: 36px;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ===== جدول البيانات ===== */
+        .table-wrapper {
+            background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow-x: auto;
+            margin-bottom: 30px;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            padding: 25px;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 102, 204, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 102, 204, 0.6);
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: #b3d9ff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: white;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+        }
+
+        th {
+            padding: 15px;
+            text-align: right;
+            font-weight: bold;
+            border-bottom: 2px solid #4d94ff;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #4d94ff;
+            transition: all 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background: rgba(77, 148, 255, 0.2);
+        }
+
+        td {
+            padding: 15px;
+        }
+
+        .status-badge {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 12px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .status-pending {
+            background: linear-gradient(135deg, #ff9900 0%, #ff6600 100%);
+            color: white;
+        }
+
+        .status-approved {
+            background: linear-gradient(135deg, #00cc00 0%, #009900 100%);
+            color: white;
+        }
+
+        .status-rejected {
+            background: linear-gradient(135deg, #cc0000 0%, #990000 100%);
+            color: white;
+        }
+
+        /* ===== زر الإجراءات ===== */
+        .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-view {
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-view:hover {
+            background: linear-gradient(135deg, #0052a3 0%, #003d7a 100%);
+            transform: translateY(-2px);
+        }
+
+        .btn-approve {
+            background: linear-gradient(135deg, #00cc00 0%, #009900 100%);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-approve:hover {
+            background: linear-gradient(135deg, #009900 0%, #006600 100%);
+            transform: translateY(-2px);
+        }
+
+        .btn-reject {
+            background: linear-gradient(135deg, #cc0000 0%, #990000 100%);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-reject:hover {
+            background: linear-gradient(135deg, #990000 0%, #660000 100%);
+            transform: translateY(-2px);
+        }
+
+        .btn-delete {
+            background: linear-gradient(135deg, #ff6600 0%, #ff3300 100%);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-delete:hover {
+            background: linear-gradient(135deg, #ff3300 0%, #ff0000 100%);
+            transform: translateY(-2px);
+        }
+
+        /* ===== نافذة التفاصيل ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            color: white;
+        }
+
+        .close {
+            color: white;
+            float: left;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            color: #ff0000;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .modal-field {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(77, 148, 255, 0.1);
+            border-right: 3px solid #0066cc;
+            border-radius: 5px;
+        }
+
+        .modal-label {
+            color: #b3d9ff;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .modal-value {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn-approve {
+            background: linear-gradient(135deg, #00cc00 0%, #009900 100%);
+            color: white;
+        }
+
+        .modal-btn-approve:hover {
+            background: linear-gradient(135deg, #009900 0%, #006600 100%);
+        }
+
+        .modal-btn-reject {
+            background: linear-gradient(135deg, #cc0000 0%, #990000 100%);
+            color: white;
+        }
+
+        .modal-btn-reject:hover {
+            background: linear-gradient(135deg, #990000 0%, #660000 100%);
+        }
+
+        .modal-btn-close {
+            background: linear-gradient(135deg, #666666 0%, #444444 100%);
+            color: white;
+        }
+
+        .modal-btn-close:hover {
+            background: linear-gradient(135deg, #444444 0%, #222222 100%);
+        }
+
+        /* ===== الرسوم المتحركة ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ===== استجابة الهاتف ===== */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .table-wrapper {
+                padding: 15px;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+
+            .action-btns {
+                flex-direction: column;
+            }
+
+            .btn-view,
+            .btn-approve,
+            .btn-reject,
+            .btn-delete {
+                width: 100%;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 30% 2.5%;
+            }
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #4d94ff;
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.95);
+            color: #1a3a52;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #0066cc;
+            box-shadow: 0 0 10px rgba(0, 102, 204, 0.3);
+        }
+
+        .search-btn {
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: linear-gradient(135deg, #0052a3 0%, #003d7a 100%);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #b3d9ff;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== شريط التنقل ===== -->
+    <nav>
+        <div class="logo-nav">💳 لوحة التحكم - الأدمن</div>
+        <ul class="nav-links">
+            <li><a href="#" onclick="goHome(); return false;">الرئيسية</a></li>
+            <li><a href="#" class="active">لوحة التحكم</a></li>
+        </ul>
+        <button class="logout-btn" onclick="logout()">تسجيل الخروج 🚪</button>
+    </nav>
+
+    <div class="container">
+
+        <!-- ===== عنوان الصفحة ===== -->
+        <h1 class="page-title">📊 لوحة تحكم الأدمن</h1>
+
+        <!-- ===== الإحصائيات ===== -->
+        <div class="stats-container" id="statsContainer">
+            <div class="stat-card">
+                <div class="stat-number" id="totalRequests">0</div>
+                <div class="stat-label">إجمالي الطلبات</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="pendingRequests">0</div>
+                <div class="stat-label">طلبات قيد المراجعة</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="approvedRequests">0</div>
+                <div class="stat-label">طلبات مقبولة</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="rejectedRequests">0</div>
+                <div class="stat-label">طلبات مرفوضة</div>
+            </div>
+        </div>
+
+        <!-- ===== البحث ===== -->
+        <div class="table-wrapper">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="ابحث عن بريد أو اسم...">
+                <button class="search-btn" onclick="searchRequests()">🔍 بحث</button>
+            </div>
+
+            <!-- ===== جدول البيانات ===== -->
+            <table id="requestsTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>البريد الإلكتروني</th>
+                        <th>المبلغ</th>
+                        <th>المدة</th>
+                        <th>التاريخ</th>
+                        <th>الحالة</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr>
+                        <td colspan="7" class="empty-state">
+                            <div class="empty-state-icon">📭</div>
+                            <div>لا توجد بيانات حتى الآن</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <!-- ===== نافذة التفاصيل ===== -->
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="modal-title">📋 تفاصيل الطلب</div>
+
+            <div class="modal-field">
+                <div class="modal-label">البريد الإلكتروني</div>
+                <div class="modal-value" id="modalEmail">-</div>
+            </div>
+
+            <div class="modal-field">
+                <div class="modal-label">مبلغ القرض</div>
+                <div class="modal-value" id="modalAmount">-</div>
+            </div>
+
+            <div class="modal-field">
+                <div class="modal-label">مدة السداد</div>
+                <div class="modal-value" id="modalPeriod">-</div>
+            </div>
+
+            <div class="modal-field">
+                <div class="modal-label">التاريخ</div>
+                <div class="modal-value" id="modalDate">-</div>
+            </div>
+
+            <div class="modal-field">
+                <div class="modal-label">الحالة</div>
+                <div class="modal-value" id="modalStatus">-</div>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-approve" onclick="approveRequest(currentRequestId)">✓ قبول</button>
+                <button class="modal-btn modal-btn-reject" onclick="rejectRequest(currentRequestId)">✕ رفض</button>
+                <button class="modal-btn modal-btn-close" onclick="closeModal()">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let requests = [];
+        let currentRequestId = null;
+        let filteredRequests = [];
+
+        // ===== تحميل البيانات من LocalStorage =====
+        function loadRequests() {
+            const savedRequests = localStorage.getItem('loanRequests');
+            requests = savedRequests ? JSON.parse(savedRequests) : [];
+            filteredRequests = [...requests];
+            displayRequests();
+            updateStats();
+        }
+
+        // ===== عرض البيانات في الجدول =====
+        function displayRequests() {
+            const tableBody = document.getElementById('tableBody');
+            
+            if (filteredRequests.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="empty-state">
+                            <div class="empty-state-icon">📭</div>
+                            <div>لا توجد بيانات</div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tableBody.innerHTML = filteredRequests.map((request, index) => `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td>${request.email}</td>
+                    <td>$${request.amount}</td>
+                    <td>${request.period} شهر</td>
+                    <td>${request.date}</td>
+                    <td>
+                        <span class="status-badge status-${request.status.toLowerCase()}">
+                            ${getStatusText(request.status)}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="btn-view" onclick="viewDetails(${request.id})">👁️ عرض</button>
+                            ${request.status === 'pending' ? `
+                                <button class="btn-approve" onclick="approveRequest(${request.id})">✓ قبول</button>
+                                <button class="btn-reject" onclick="rejectRequest(${request.id})">✕ رفض</button>
+                            ` : ''}
+                            <button class="btn-delete" onclick="deleteRequest(${request.id})">🗑️ حذف</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // ===== عرض التفاصيل =====
+        function viewDetails(id) {
+            const request = requests.find(r => r.id === id);
+            if (!request) return;
+
+            currentRequestId = id;
+            document.getElementById('modalEmail').textContent = request.email;
+            document.getElementById('modalAmount').textContent = `$${request.amount}`;
+            document.getElementById('modalPeriod').textContent = `${request.period} شهر`;
+            document.getElementById('modalDate').textContent = request.date;
+            document.getElementById('modalStatus').innerHTML = `
+                <span class="status-badge status-${request.status.toLowerCase()}">
+                    ${getStatusText(request.status)}
+                </span>
+            `;
+            document.getElementById('detailsModal').style.display = 'block';
+        }
+
+        // ===== إغلاق النافذة =====
+        function closeModal() {
+            document.getElementById('detailsModal').style.display = 'none';
+        }
+
+        // ===== قبول الطلب =====
+        function approveRequest(id) {
+            const request = requests.find(r => r.id === id);
+            if (request) {
+                request.status = 'approved';
+                saveRequests();
+                displayRequests();
+                updateStats();
+                closeModal();
+                alert('✅ تم قبول الطلب بنجاح!');
+            }
+        }
+
+        // ===== رفض الطلب =====
+        function rejectRequest(id) {
+            const request = requests.find(r => r.id === id);
+            if (request) {
+                request.status = 'rejected';
+                saveRequests();
+                displayRequests();
+                updateStats();
+                closeModal();
+                alert('❌ تم رفض الطلب');
+            }
+        }
+
+        // ===== حذف الطلب =====
+        function deleteRequest(id) {
+            if (confirm('هل أنت متأكد من حذف هذا الطلب؟')) {
+                requests = requests.filter(r => r.id !== id);
+                filteredRequests = filteredRequests.filter(r => r.id !== id);
+                saveRequests();
+                displayRequests();
+                updateStats();
+                alert('تم حذف الطلب بنجاح');
+            }
+        }
+
+        // ===== تحديث الإحصائيات =====
+        function updateStats() {
+            document.getElementById('totalRequests').textContent = requests.length;
+            document.getElementById('pendingRequests').textContent = 
+                requests.filter(r => r.status === 'pending').length;
+            document.getElementById('approvedRequests').textContent = 
+                requests.filter(r => r.status === 'approved').length;
+            document.getElementById('rejectedRequests').textContent = 
+                requests.filter(r => r.status === 'rejected').length;
+        }
+
+        // ===== البحث =====
+        function searchRequests() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            filteredRequests = requests.filter(r => 
+                r.email.toLowerCase().includes(searchTerm)
+            );
+            displayRequests();
+        }
+
+        // ===== الخروج =====
+        function logout() {
+            if (confirm('هل تريد تسجيل الخروج؟')) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // ===== الذهاب للرئيسية =====
+        function goHome() {
+            window.location.href = 'index.html';
+        }
+
+        // ===== حفظ البيانات =====
+        function saveRequests() {
+            localStorage.setItem('loanRequests', JSON.stringify(requests));
+        }
+
+        // ===== الحصول على نص الحالة =====
+        function getStatusText(status) {
+            const statusMap = {
+                'pending': '⏳ قيد المراجعة',
+                'approved': '✅ مقبول',
+                'rejected': '❌ مرفوض'
+            };
+            return statusMap[status] || status;
+        }
+
+        // ===== إغلاق النافذة عند الضغط خارجها =====
+        window.onclick = function(event) {
+            const modal = document.getElementById('detailsModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // ===== تحميل البيانات عند فتح الصفحة =====
+        window.addEventListener('load', function() {
+            loadRequests();
+            // تحديث البيانات كل 3 ثوان
+            setInterval(loadRequests, 3000);
+        });
+    </script>
+
+</body>
+</html>
