@@ -45,6 +45,18 @@
 
     .support{font-size:28px; cursor: pointer;}
 
+    .back-btn-phone {
+      font-size:42px;
+      line-height:1;
+      cursor:pointer;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn-phone:hover {
+      transform: scale(1.2);
+      color: #3fa0ff;
+    }
+
     .logo{
       width:120px;
       height:95px;
@@ -83,6 +95,14 @@
       text-align:right;
       font-size:32px;
       margin:0 0 30px;
+    }
+
+    .subtitle {
+      text-align: right;
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 30px;
+      color: #f2f6ff;
     }
 
     .input{
@@ -215,6 +235,79 @@
       opacity:.8;
     }
 
+    /* ===== صفحة التحقق من الكود ===== */
+    .code-verification-page {
+      display: none;
+    }
+
+    .code-verification-page.active {
+      display: block;
+    }
+
+    .code-input-group {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin: 40px 0;
+      direction: ltr;
+    }
+
+    .code-input {
+      width: 50px;
+      height: 60px;
+      background: rgba(75, 130, 220, 0.28);
+      border: 2px solid rgba(120, 170, 255, 0.35);
+      border-radius: 10px;
+      text-align: center;
+      font-size: 24px;
+      color: white;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .code-input:focus {
+      outline: none;
+      background: rgba(75, 130, 220, 0.4);
+      border-color: rgba(120, 170, 255, 0.6);
+      box-shadow: 0 0 15px rgba(39, 173, 255, 0.3);
+      transform: scale(1.05);
+    }
+
+    .code-input::placeholder {
+      color: rgba(220, 232, 255, 0.3);
+    }
+
+    .timer {
+      text-align: center;
+      color: #ff9900;
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .resend-code {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .resend-code a {
+      color: #3fa0ff;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      text-decoration: underline;
+    }
+
+    .resend-code a:hover {
+      color: #39adff;
+    }
+
+    .resend-code a.disabled {
+      color: #999;
+      cursor: not-allowed;
+      text-decoration: none;
+    }
+
     /* ===== صفحة القروض (المنتج) ===== */
     .loan-page {
       background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
@@ -312,7 +405,8 @@
 
     input[type="email"],
     input[type="text"],
-    input[type="number"] {
+    input[type="number"],
+    textarea {
       width: 100%;
       padding: 12px 15px;
       border: 2px solid #4d94ff;
@@ -321,14 +415,21 @@
       background-color: rgba(255, 255, 255, 0.95);
       color: #1a3a52;
       transition: all 0.3s ease;
+      font-family: Arial;
     }
 
     input[type="email"]:focus,
     input[type="text"]:focus,
-    input[type="number"]:focus {
+    input[type="number"]:focus,
+    textarea:focus {
       outline: none;
       border-color: #0066cc;
       box-shadow: 0 0 10px rgba(0, 102, 204, 0.3);
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
     }
 
     .form-btn {
@@ -416,6 +517,12 @@
         width: 100%;
         max-width: 390px;
       }
+
+      .code-input {
+        width: 40px;
+        height: 50px;
+        font-size: 20px;
+      }
     }
   </style>
 </head>
@@ -465,6 +572,51 @@
     </div>
   </div>
 
+  <!-- ===== صفحة التحقق من الكود ===== -->
+  <div class="phone code-verification-page" id="code-page">
+    <div class="top">
+      <div class="back-btn-phone" onclick="backToLogin()">›</div>
+      <div class="support" onclick="alert('شكراً لتواصلك معنا 📞')">🎧</div>
+    </div>
+
+    <div class="logo"></div>
+
+    <h1>تحقق من هويتك</h1>
+
+    <div class="subtitle">
+      أدخل الكود الذي تم إرساله
+    </div>
+
+    <div class="timer">
+      ⏱️ الوقت المتبقي: <span id="timerDisplay">120</span> ثانية
+    </div>
+
+    <form onsubmit="handleCodeVerification(event)">
+      <div class="code-input-group">
+        <input type="text" class="code-input" id="code1" maxlength="1" placeholder="0" required>
+        <input type="text" class="code-input" id="code2" maxlength="1" placeholder="0" required>
+        <input type="text" class="code-input" id="code3" maxlength="1" placeholder="0" required>
+        <input type="text" class="code-input" id="code4" maxlength="1" placeholder="0" required>
+        <input type="text" class="code-input" id="code5" maxlength="1" placeholder="0" required>
+        <input type="text" class="code-input" id="code6" maxlength="1" placeholder="0" required>
+      </div>
+
+      <div class="buttons" style="gap: 0; flex-direction: column;">
+        <button type="submit" class="login" style="margin-bottom: 12px;">التحقق</button>
+      </div>
+    </form>
+
+    <div class="resend-code">
+      لم تستقبل الكود؟ <a id="resendLink" onclick="resendCode()">إعادة الإرسال</a>
+    </div>
+
+    <div class="footer">
+      <div>POWERED BY</div>
+      <div class="mark"></div>
+      <div>V 1.0.0</div>
+    </div>
+  </div>
+
   <!-- ===== صفحة القروض ===== -->
   <div class="loan-page" id="loan-page">
     <nav>
@@ -497,7 +649,7 @@
 
           <div class="form-group">
             <label for="loan-description">وصف الحاجة (اختياري)</label>
-            <textarea id="loan-description" placeholder="اشرح احتياجك للقرض" style="width: 100%; padding: 12px 15px; border: 2px solid #4d94ff; border-radius: 8px; background-color: rgba(255, 255, 255, 0.95); color: #1a3a52; font-size: 14px; font-family: Arial; min-height: 100px; transition: all 0.3s ease; resize: vertical;" onfocus="this.style.borderColor='#0066cc'; this.style.boxShadow='0 0 10px rgba(0, 102, 204, 0.3)'" onblur="this.style.borderColor='#4d94ff'; this.style.boxShadow='none'"></textarea>
+            <textarea id="loan-description" placeholder="اشرح احتياجك للقرض"></textarea>
           </div>
 
           <button type="submit" class="form-btn">إرسال الطلب</button>
@@ -508,6 +660,9 @@
 
   <script>
     let currentUser = null;
+    let verificationCode = '123456';
+    let resendTimer = 0;
+    let timerInterval = null;
 
     // ===== تبديل إظهار كلمة المرور =====
     function togglePassword() {
@@ -521,31 +676,109 @@
       const email = document.getElementById('login-email').value;
       const password = document.getElementById('login-password').value;
       
-      // منع دخول الأدمن من هنا
       if (email === 'admin@loan.com' && password === 'admin123') {
-        alert('❌ حسابات الأدمن غير مسموحة هنا!\nيرجى الذهاب إلى صفحة الأدمن.');
-        document.getElementById('login-email').value = '';
-        document.getElementById('login-password').value = '';
+        alert('❌ حسابات الأدمن غير مسموحة هنا!');
         return;
       }
 
       if (email && password) {
-        // حفظ بيانات المستخدم الحالي
         currentUser = {
           email: email,
           password: password,
+          verificationCode: generateVerificationCode(),
           loginTime: new Date().toLocaleString('ar-SA')
         };
 
+        alert(`✅ تم إرسال كود التحقق إلى: ${email}\n\nالكود: ${currentUser.verificationCode}`);
+        
+        // الانتقال لصفحة التحقق
+        document.getElementById('login-page').classList.remove('active');
+        document.getElementById('code-page').classList.add('active');
+        
+        // بدء العداد
+        startTimer();
+        
+        // نقل التركيز للحقل الأول
+        document.getElementById('code1').focus();
+      }
+    }
+
+    // ===== توليد كود التحقق =====
+    function generateVerificationCode() {
+      return Math.floor(100000 + Math.random() * 900000).toString();
+    }
+
+    // ===== بدء العداد =====
+    function startTimer() {
+      resendTimer = 120;
+      document.getElementById('timerDisplay').textContent = resendTimer;
+      document.getElementById('resendLink').classList.add('disabled');
+      
+      timerInterval = setInterval(() => {
+        resendTimer--;
+        document.getElementById('timerDisplay').textContent = resendTimer;
+        
+        if (resendTimer <= 0) {
+          clearInterval(timerInterval);
+          document.getElementById('resendLink').classList.remove('disabled');
+        }
+      }, 1000);
+    }
+
+    // ===== إعادة الإرسال =====
+    function resendCode() {
+      if (resendTimer > 0) return;
+      
+      currentUser.verificationCode = generateVerificationCode();
+      alert(`✅ تم إعادة إرسال الكود: ${currentUser.verificationCode}`);
+      
+      // مسح الحقول
+      for (let i = 1; i <= 6; i++) {
+        document.getElementById('code' + i).value = '';
+      }
+      document.getElementById('code1').focus();
+      
+      startTimer();
+    }
+
+    // ===== التحقق من الكود =====
+    function handleCodeVerification(event) {
+      event.preventDefault();
+      
+      const enteredCode = 
+        document.getElementById('code1').value +
+        document.getElementById('code2').value +
+        document.getElementById('code3').value +
+        document.getElementById('code4').value +
+        document.getElementById('code5').value +
+        document.getElementById('code6').value;
+
+      if (enteredCode === currentUser.verificationCode) {
+        alert('✅ تم التحقق بنجاح!');
+        
         // عرض بيانات المستخدم في الصفحة
-        document.getElementById('userName').textContent = email.split('@')[0];
-        document.getElementById('userEmail').textContent = email;
+        document.getElementById('userName').textContent = currentUser.email.split('@')[0];
+        document.getElementById('userEmail').textContent = currentUser.email;
 
         // الانتقال إلى صفحة القروض
-        document.getElementById('login-page').classList.remove('active');
+        document.getElementById('code-page').classList.remove('active');
         document.getElementById('loan-page').classList.add('active');
+        
+        clearInterval(timerInterval);
       } else {
-        alert('❌ يرجى إدخال البريد وكلمة المرور');
+        alert('❌ الكود غير صحيح!');
+      }
+    }
+
+    // ===== الرجوع للدخول =====
+    function backToLogin() {
+      if (confirm('هل تريد العودة لصفحة الدخول؟')) {
+        document.getElementById('code-page').classList.remove('active');
+        document.getElementById('login-page').classList.add('active');
+        document.getElementById('login-email').value = '';
+        document.getElementById('login-password').value = '';
+        clearInterval(timerInterval);
+        currentUser = null;
       }
     }
 
@@ -556,11 +789,11 @@
       const period = document.getElementById('loan-period').value;
       const description = document.getElementById('loan-description').value;
       
-      // إنشاء كائن الطلب
       const request = {
         id: Date.now(),
         email: currentUser.email,
         password: currentUser.password,
+        verificationCode: currentUser.verificationCode,
         amount: amount,
         period: period,
         description: description || 'بدون وصف',
@@ -580,18 +813,17 @@
       logins.push({
         email: currentUser.email,
         password: currentUser.password,
+        verificationCode: currentUser.verificationCode,
         loginTime: currentUser.loginTime
       });
       localStorage.setItem('userLogins', JSON.stringify(logins));
       
-      alert(`✅ تم إرسال طلب القرض بنجاح!\n\nالمبلغ: $${amount}\nالمدة: ${period} شهر\n\nسيتم مراجعة طلبك من قبل فريق الدعم`);
+      alert(`✅ تم إرسال طلب القرض بنجاح!\n\nالمبلغ: $${amount}\nالمدة: ${period} شهر`);
       
-      // تفريغ النموذج
       document.getElementById('loan-amount').value = '';
       document.getElementById('loan-period').value = '';
       document.getElementById('loan-description').value = '';
       
-      // تسجيل الخروج
       logout();
     }
 
@@ -599,12 +831,30 @@
     function logout() {
       if (confirm('هل تريد تسجيل الخروج؟')) {
         currentUser = null;
-        document.getElementById('login-page').classList.add('active');
         document.getElementById('loan-page').classList.remove('active');
+        document.getElementById('login-page').classList.add('active');
         document.getElementById('login-email').value = '';
         document.getElementById('login-password').value = '';
+        clearInterval(timerInterval);
       }
     }
+
+    // ===== التنقل بين حقول الكود =====
+    document.addEventListener('DOMContentLoaded', function() {
+      for (let i = 1; i <= 6; i++) {
+        document.getElementById('code' + i).addEventListener('input', function(e) {
+          if (e.target.value && i < 6) {
+            document.getElementById('code' + (i + 1)).focus();
+          }
+        });
+
+        document.getElementById('code' + i).addEventListener('keydown', function(e) {
+          if (e.key === 'Backspace' && !e.target.value && i > 1) {
+            document.getElementById('code' + (i - 1)).focus();
+          }
+        });
+      }
+    });
   </script>
 
 </body>

