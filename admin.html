@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيق القروض - الأدمن</title>
+    <title>لوحة تحكم الأدمن - تطبيق القروض</title>
     <style>
         * {
             margin: 0;
@@ -96,16 +96,7 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        /* ===== جدول البيانات ===== */
-        .table-wrapper {
-            background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            overflow-x: auto;
-            margin-bottom: 30px;
-        }
-
+        /* ===== الإحصائيات ===== */
         .stats-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -137,6 +128,53 @@
         .stat-label {
             font-size: 16px;
             color: #b3d9ff;
+        }
+
+        /* ===== جدول البيانات ===== */
+        .table-wrapper {
+            background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow-x: auto;
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #4d94ff;
+            border-radius: 8px;
+            font-size: 14px;
+            background-color: rgba(255, 255, 255, 0.95);
+            color: #1a3a52;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #0066cc;
+            box-shadow: 0 0 10px rgba(0, 102, 204, 0.3);
+        }
+
+        .search-btn {
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: linear-gradient(135deg, #0052a3 0%, #003d7a 100%);
         }
 
         table {
@@ -375,6 +413,17 @@
             to { opacity: 1; }
         }
 
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #b3d9ff;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
         /* ===== استجابة الهاتف ===== */
         @media (max-width: 768px) {
             nav {
@@ -418,54 +467,10 @@
                 width: 95%;
                 margin: 30% 2.5%;
             }
-        }
 
-        .search-box {
-            margin-bottom: 20px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .search-box input {
-            flex: 1;
-            padding: 12px 15px;
-            border: 2px solid #4d94ff;
-            border-radius: 8px;
-            font-size: 14px;
-            background-color: rgba(255, 255, 255, 0.95);
-            color: #1a3a52;
-        }
-
-        .search-box input:focus {
-            outline: none;
-            border-color: #0066cc;
-            box-shadow: 0 0 10px rgba(0, 102, 204, 0.3);
-        }
-
-        .search-btn {
-            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .search-btn:hover {
-            background: linear-gradient(135deg, #0052a3 0%, #003d7a 100%);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: #b3d9ff;
-        }
-
-        .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
+            .page-title {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
@@ -475,8 +480,8 @@
     <nav>
         <div class="logo-nav">💳 لوحة التحكم - الأدمن</div>
         <ul class="nav-links">
-            <li><a href="#" onclick="goHome(); return false;">الرئيسية</a></li>
-            <li><a href="#" class="active">لوحة التحكم</a></li>
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a class="active">لوحة التحكم</a></li>
         </ul>
         <button class="logout-btn" onclick="logout()">تسجيل الخروج 🚪</button>
     </nav>
@@ -720,11 +725,6 @@
             if (confirm('هل تريد تسجيل الخروج؟')) {
                 window.location.href = 'index.html';
             }
-        }
-
-        // ===== الذهاب للرئيسية =====
-        function goHome() {
-            window.location.href = 'index.html';
         }
 
         // ===== حفظ البيانات =====

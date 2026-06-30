@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>تسجيل الدخول</title>
+  <title>تطبيق القروض - تسجيل الدخول</title>
   <style>
     *{box-sizing:border-box}
     body{
@@ -15,7 +15,16 @@
       background:#020713;
       font-family:Arial, sans-serif;
       color:white;
+      padding:20px;
     }
+
+    /* ===== الحاوية الرئيسية ===== */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    /* ===== صفحة الهاتف (تسجيل الدخول) ===== */
     .phone{
       width:390px;
       min-height:780px;
@@ -24,7 +33,15 @@
       border-radius:22px;
       position:relative;
       box-shadow:0 0 35px #000;
+      margin:0 auto;
+      animation: slideUp 0.6s ease-out;
+      display: none;
     }
+
+    .phone.active {
+      display: block;
+    }
+
     .top{
       display:flex;
       justify-content:space-between;
@@ -32,13 +49,17 @@
       font-weight:bold;
       font-size:18px;
     }
-    .support{font-size:28px}
+
+    .support{font-size:28px; cursor: pointer;}
+
     .logo{
       width:120px;
       height:95px;
       margin:75px auto 60px;
       position:relative;
+      animation: float 3s ease-in-out infinite;
     }
+
     .logo::before,.logo::after{
       content:"";
       position:absolute;
@@ -47,21 +68,30 @@
       border-radius:8px;
       transform:skewY(-30deg);
     }
+
     .logo::before{
       background:linear-gradient(90deg,#01d3b7,#028aff);
       top:38px;
       left:-10px;
     }
+
     .logo::after{
       background:linear-gradient(90deg,#0b5cff,#38a1ff);
       top:0;
       right:-5px;
     }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+    }
+
     h1{
       text-align:right;
       font-size:32px;
       margin:0 0 30px;
     }
+
     .input{
       height:64px;
       background:rgba(75,130,220,.28);
@@ -74,7 +104,15 @@
       gap:12px;
       font-size:20px;
       color:#dce8ff;
+      transition: all 0.3s ease;
     }
+
+    .input:focus-within {
+      background:rgba(75,130,220,.4);
+      border-color:rgba(120,170,255,.6);
+      box-shadow: 0 0 15px rgba(39,173,255, 0.3);
+    }
+
     .input input{
       flex:1;
       background:none;
@@ -84,17 +122,50 @@
       font-size:19px;
       text-align:right;
     }
+
+    .input input::placeholder {
+      color: rgba(220, 232, 255, 0.6);
+    }
+
+    .toggle-password {
+      background: none;
+      border: none;
+      color: #dce8ff;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 0;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-password:hover {
+      color: #3fa0ff;
+      transform: scale(1.1);
+    }
+
     .forgot{
       text-align:right;
       margin-bottom:26px;
       font-size:16px;
     }
-    .forgot span,.signup span{color:#3fa0ff;font-weight:bold}
+
+    .forgot span, .signup span {
+      color:#3fa0ff;
+      font-weight:bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .forgot span:hover, .signup span:hover {
+      color: #39adff;
+      text-decoration: underline;
+    }
+
     .buttons{
       display:flex;
       gap:12px;
       direction:ltr;
     }
+
     button{
       border:0;
       height:64px;
@@ -104,14 +175,34 @@
       font-size:24px;
       font-weight:bold;
       cursor:pointer;
+      transition: all 0.3s ease;
     }
-    .login{flex:1}
-    .qr{width:68px;font-size:30px}
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(57, 173, 255, 0.4);
+    }
+
+    button:active {
+      transform: translateY(-1px);
+    }
+
+    .login{
+      flex:1;
+      font-size: 18px;
+    }
+
+    .qr{
+      width:68px;
+      font-size:30px;
+    }
+
     .signup{
       text-align:center;
       margin-top:18px;
       font-size:17px;
     }
+
     .footer{
       position:absolute;
       bottom:32px;
@@ -121,6 +212,7 @@
       color:#d6def0;
       letter-spacing:1px;
     }
+
     .footer .mark{
       margin:14px auto;
       width:55px;
@@ -129,50 +221,510 @@
       border-radius:12px;
       opacity:.8;
     }
+
+    /* ===== الصفحات الأخرى ===== */
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+      animation: slideUp 0.6s ease-out;
+    }
+
+    .home-page, .loan-page, .signup-page {
+      background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    nav {
+      background: linear-gradient(135deg, #0f2438 0%, #1a3a52 100%);
+      padding: 15px 30px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .logo-nav {
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .nav-links a:hover {
+      background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+      color: white;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero p {
+      font-size: 18px;
+      margin-bottom: 40px;
+      color: #b3d9ff;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .btn {
+      padding: 15px 40px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: bold;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #0052a3 0%, #003d7a 100%);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 102, 204, 0.4);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #4d94ff 0%, #0066cc 100%);
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+      transform: translateY(-3px);
+    }
+
+    /* ===== نموذج تقديم الطلب ===== */
+    .form-container {
+      max-width: 500px;
+      margin: 50px auto;
+      background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .form-title {
+      color: white;
+      font-size: 28px;
+      margin-bottom: 30px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      color: white;
+      margin-bottom: 8px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    input[type="email"],
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #4d94ff;
+      border-radius: 8px;
+      font-size: 14px;
+      background-color: rgba(255, 255, 255, 0.95);
+      color: #1a3a52;
+      transition: all 0.3s ease;
+    }
+
+    input[type="email"]:focus,
+    input[type="text"]:focus,
+    input[type="number"]:focus {
+      outline: none;
+      border-color: #0066cc;
+      box-shadow: 0 0 10px rgba(0, 102, 204, 0.3);
+    }
+
+    .form-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+    }
+
+    .form-btn:hover {
+      background: linear-gradient(135deg, #0052a3 0%, #003d7a 100%);
+      transform: translateY(-2px);
+    }
+
+    .back-btn {
+      width: 100%;
+      padding: 10px;
+      background: linear-gradient(135deg, #4d94ff 0%, #0066cc 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+    }
+
+    .signup-link {
+      text-align: center;
+      margin-top: 20px;
+      color: #b3d9ff;
+      font-size: 14px;
+    }
+
+    .signup-link a {
+      color: #4d94ff;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .signup-link a:hover {
+      color: white;
+      text-decoration: underline;
+    }
+
+    footer {
+      background: linear-gradient(135deg, #0f2438 0%, #1a3a52 100%);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 60px;
+      border-radius: 10px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ===== الرسوم المتحركة ===== */
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== استجابة الهاتف ===== */
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .form-container {
+        max-width: 100%;
+        margin: 30px 20px;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <div class="phone">
+  <!-- ===== صفحة تسجيل الدخول ===== -->
+  <div class="phone active" id="login-page">
     <div class="top">
-      <div>الإنكليزية</div>
-      <div class="support">🎧</div>
+      <div>العربية</div>
+      <div class="support" onclick="alert('شكراً لتواصلك معنا 📞')">🎧</div>
     </div>
 
     <div class="logo"></div>
 
     <h1>تسجيل الدخول</h1>
 
-    <div class="input">
-      <span>👤</span>
-      <input type="email" placeholder="البريد الإلكتروني">
-    </div>
+    <form onsubmit="handleLogin(event)">
+      <div class="input">
+        <span>👤</span>
+        <input type="email" id="login-email" placeholder="البريد الإلكتروني" required>
+      </div>
 
-    <div class="input">
-      <span>🔒</span>
-      <input type="password" placeholder="كلمة السر">
-      <span>👁</span>
-    </div>
+      <div class="input">
+        <span>🔒</span>
+        <input type="password" id="login-password" placeholder="كلمة السر" required>
+        <button type="button" class="toggle-password" onclick="togglePassword()">👁️</button>
+      </div>
 
-    <div class="forgot">
-      هل نسيت كلمة المرور؟ <span>تغيير كلمة المرور</span>
-    </div>
+      <div class="forgot">
+        هل نسيت كلمة المرور؟ <span onclick="alert('سيتم إعادة تعيين كلمة المرور قريباً')">تغيير كلمة المرور</span>
+      </div>
 
-    <div class="buttons">
-      <button class="qr">▦</button>
-      <button class="login">تسجيل الدخول</button>
-    </div>
+      <div class="buttons">
+        <button type="button" class="qr" title="QR Code" onclick="alert('ميزة QR Code قريباً')">▦</button>
+        <button type="submit" class="login">تسجيل الدخول</button>
+      </div>
+    </form>
 
     <div class="signup">
-      لا تملك حساب مسبقاً؟ <span>إنشاء حساب</span>
+      لا تملك حساب مسبقاً؟ <span onclick="showSignup()">إنشاء حساب</span>
     </div>
 
     <div class="footer">
       <div>POWERED BY</div>
       <div class="mark"></div>
-      <div>V 2.2.6</div>
+      <div>V 1.0.0</div>
     </div>
   </div>
+
+  <!-- ===== صفحة الرئيسية ===== -->
+  <div class="page home-page" id="home-page">
+    <nav>
+      <div class="logo-nav">💳 تطبيق القروض</div>
+      <ul class="nav-links">
+        <li><a onclick="showLogin()">الدخول</a></li>
+        <li><a onclick="showLoan()">تقديم قرض</a></li>
+      </ul>
+    </nav>
+
+    <div class="hero">
+      <h1>مرحباً بك في تطبيق القروض</h1>
+      <p>احصل على قرضك بسهولة وسرعة من خلال منصتنا الموثوقة</p>
+      <div class="button-group">
+        <a class="btn btn-primary" onclick="showLogin()">دخول إلى الحساب</a>
+        <a class="btn btn-secondary" onclick="showLoan()">تقديم طلب قرض</a>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2024 تطبيق القروض. جميع الحقوق محفوظة.</p>
+    </footer>
+  </div>
+
+  <!-- ===== صفحة إنشاء حساب ===== -->
+  <div class="page signup-page" id="signup-page">
+    <div class="form-container">
+      <h2 class="form-title">إنشاء حساب جديد</h2>
+      <form onsubmit="handleSignup(event)">
+        <div class="form-group">
+          <label for="signup-email">البريد الإلكتروني</label>
+          <input type="email" id="signup-email" placeholder="أدخل بريدك الإلكتروني" required>
+        </div>
+
+        <button type="submit" class="form-btn">التالي →</button>
+      </form>
+
+      <button class="back-btn" onclick="showLogin()">← عودة</button>
+    </div>
+  </div>
+
+  <!-- ===== صفحة تقديم طلب القرض ===== -->
+  <div class="page loan-page" id="loan-page">
+    <nav>
+      <div class="logo-nav">💳 تقديم طلب قرض</div>
+      <ul class="nav-links">
+        <li><a onclick="showHome()">الرئيسية</a></li>
+      </ul>
+    </nav>
+
+    <div class="form-container">
+      <h2 class="form-title">تقديم طلب قرض</h2>
+      <form onsubmit="handleLoanRequest(event)">
+        <div class="form-group">
+          <label for="loan-email">البريد الإلكتروني</label>
+          <input type="email" id="loan-email" placeholder="أدخل بريدك الإلكتروني" required>
+        </div>
+
+        <div class="form-group">
+          <label for="loan-amount">مبلغ القرض المطلوب</label>
+          <input type="number" id="loan-amount" placeholder="أدخل المبلغ (بالدولار)" required>
+        </div>
+
+        <div class="form-group">
+          <label for="loan-period">مدة السداد (بالأشهر)</label>
+          <input type="number" id="loan-period" placeholder="أدخل عدد الأشهر" required>
+        </div>
+
+        <button type="submit" class="form-btn">إرسال الطلب</button>
+      </form>
+
+      <button class="back-btn" onclick="showHome()">← عودة</button>
+    </div>
+
+    <footer>
+      <p>&copy; 2024 تطبيق القروض. جميع الحقوق محفوظة.</p>
+    </footer>
+  </div>
+
+  <script>
+    // ===== تبديل إظهار كلمة المرور =====
+    function togglePassword() {
+      const input = document.getElementById('login-password');
+      input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    // ===== دوال التنقل =====
+    function showPage(pageId) {
+      // إخفاء جميع الصفحات
+      document.querySelectorAll('.phone, .page').forEach(page => {
+        page.classList.remove('active');
+      });
+      
+      // إظهار الصفحة المطلوبة
+      const page = document.getElementById(pageId);
+      if (page) {
+        page.classList.add('active');
+      }
+    }
+
+    function showLogin() {
+      showPage('login-page');
+    }
+
+    function showHome() {
+      showPage('home-page');
+    }
+
+    function showSignup() {
+      showPage('signup-page');
+    }
+
+    function showLoan() {
+      showPage('loan-page');
+    }
+
+    // ===== معالجة تسجيل الدخول =====
+    function handleLogin(event) {
+      event.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      
+      // التحقق من بيانات الأدمن
+      if (email === 'admin@loan.com' && password === 'admin123') {
+        alert('✅ تم تسجيل الدخول كأدمن بنجاح!');
+        window.location.href = 'admin.html';
+      } else if (email && password) {
+        alert(`✅ تم تسجيل الدخول بنجاح!\n${email}`);
+        showHome();
+      }
+      
+      document.getElementById('login-email').value = '';
+      document.getElementById('login-password').value = '';
+    }
+
+    // ===== معالجة التسجيل الجديد =====
+    function handleSignup(event) {
+      event.preventDefault();
+      const email = document.getElementById('signup-email').value;
+      alert(`✅ تم إنشاء حسابك بنجاح!\n${email}`);
+      document.getElementById('signup-email').value = '';
+      showLogin();
+    }
+
+    // ===== معالجة طلب القرض =====
+    function handleLoanRequest(event) {
+      event.preventDefault();
+      const email = document.getElementById('loan-email').value;
+      const amount = document.getElementById('loan-amount').value;
+      const period = document.getElementById('loan-period').value;
+      
+      // حفظ البيانات في LocalStorage
+      const request = {
+        id: Date.now(),
+        email: email,
+        amount: amount,
+        period: period,
+        date: new Date().toLocaleDateString('ar-SA'),
+        status: 'pending'
+      };
+      
+      let requests = JSON.parse(localStorage.getItem('loanRequests')) || [];
+      requests.push(request);
+      localStorage.setItem('loanRequests', JSON.stringify(requests));
+      
+      alert(`✅ تم إرسال طلب القرض بنجاح!\n\nالبريد: ${email}\nالمبلغ: $${amount}\nالمدة: ${period} شهر`);
+      
+      document.getElementById('loan-email').value = '';
+      document.getElementById('loan-amount').value = '';
+      document.getElementById('loan-period').value = '';
+      
+      showHome();
+    }
+
+    // ===== بيانات الأدمن (للمرجعية) =====
+    console.log('%c📋 بيانات الأدمن:', 'color: #3fa0ff; font-size: 16px; font-weight: bold;');
+    console.log('البريد: admin@loan.com');
+    console.log('كلمة المرور: admin123');
+  </script>
 
 </body>
 </html>
