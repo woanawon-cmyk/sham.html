@@ -311,32 +311,178 @@
             margin-bottom: 15px;
         }
 
+        #requestsTable th:nth-child(3),
+        #requestsTable td:nth-child(3),
+        #requestsTable th:nth-child(6),
+        #requestsTable td:nth-child(6) {
+            display: none;
+        }
+
         @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+
             nav {
                 flex-direction: column;
                 gap: 15px;
+                padding: 16px;
+                border-radius: 8px;
+                text-align: center;
+            }
+
+            .logo-nav {
+                font-size: 18px;
             }
 
             .nav-links {
-                flex-direction: column;
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .nav-links a,
+            .logout-btn {
+                display: block;
+                width: 100%;
+                min-height: 42px;
+            }
+
+            .page-title {
+                font-size: 24px;
+                margin-bottom: 18px;
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 10px;
+                margin-bottom: 16px;
+            }
+
+            .stat-card {
+                padding: 16px 10px;
+                border-radius: 8px;
+            }
+
+            .stat-number {
+                font-size: 24px;
+            }
+
+            .stat-label {
+                font-size: 12px;
+                line-height: 1.5;
+            }
+
+            .table-wrapper {
+                padding: 12px;
+                border-radius: 8px;
+                overflow-x: visible;
+            }
+
+            .search-box {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .search-box input,
+            .search-btn {
+                width: 100%;
+                min-height: 44px;
             }
 
             table {
-                font-size: 12px;
+                display: block;
+                width: 100%;
+                border-collapse: separate;
+                border-spacing: 0;
             }
 
-            th, td {
-                padding: 10px;
+            thead {
+                display: none;
+            }
+
+            tbody {
+                display: grid;
+                gap: 12px;
+            }
+
+            tbody tr {
+                display: block;
+                padding: 14px;
+                border: 1px solid rgba(77, 148, 255, 0.55);
+                border-radius: 8px;
+                background: rgba(15, 36, 56, 0.68);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+            }
+
+            tbody tr:hover {
+                background: rgba(15, 36, 56, 0.82);
+            }
+
+            td {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 12px;
+                padding: 10px 0;
+                border-bottom: 1px solid rgba(77, 148, 255, 0.26);
+                text-align: left;
+                word-break: break-word;
+            }
+
+            td:last-child {
+                border-bottom: 0;
+                padding-bottom: 0;
+            }
+
+            td::before {
+                content: "";
+                flex: 0 0 96px;
+                color: #b3d9ff;
+                font-size: 12px;
+                font-weight: bold;
+                text-align: right;
+            }
+
+            td:nth-child(1)::before {
+                content: "#";
+            }
+
+            td:nth-child(2)::before {
+                content: "البريد";
+            }
+
+            td:nth-child(4)::before {
+                content: "وقت الطلب";
+            }
+
+            td:nth-child(5)::before {
+                content: "الحالة";
+            }
+
+            td:nth-child(7)::before {
+                content: "الإجراءات";
+            }
+
+            .badge-user,
+            .status-badge {
+                max-width: 100%;
+                overflow-wrap: anywhere;
             }
 
             .action-btns {
-                flex-direction: column;
+                flex: 1;
+                flex-direction: row;
+                justify-content: flex-end;
+                gap: 8px;
             }
 
             .btn-approve,
             .btn-delete {
-                width: 100%;
+                width: auto;
+                min-height: 40px;
+                flex: 1;
             }
         }
     </style>
