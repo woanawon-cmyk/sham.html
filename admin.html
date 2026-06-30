@@ -228,30 +228,14 @@
             color: white;
         }
 
-        .status-rejected {
-            background: linear-gradient(135deg, #cc0000 0%, #990000 100%);
-            color: white;
+        .status-verified {
+            background: linear-gradient(135deg, #00ffff 0%, #00cccc 100%);
+            color: #1a3a52;
         }
 
         .action-btns {
             display: flex;
             gap: 10px;
-        }
-
-        .btn-view {
-            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .btn-view:hover {
-            background: linear-gradient(135deg, #0052a3 0%, #003d7a 100%);
-            transform: translateY(-2px);
         }
 
         .btn-approve {
@@ -262,6 +246,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 12px;
+            font-weight: bold;
             transition: all 0.3s ease;
         }
 
@@ -278,6 +263,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 12px;
+            font-weight: bold;
             transition: all 0.3s ease;
         }
 
@@ -294,6 +280,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 12px;
+            font-weight: bold;
             transition: all 0.3s ease;
         }
 
@@ -302,133 +289,26 @@
             transform: translateY(-2px);
         }
 
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            animation: fadeIn 0.3s ease-in;
-        }
-
-        .modal-content {
-            background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
-            margin: 5% auto;
-            padding: 30px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 600px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            color: white;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .close {
-            color: white;
-            float: left;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .close:hover {
-            color: #ff0000;
-        }
-
-        .modal-title {
-            font-size: 24px;
-            margin-bottom: 20px;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-        .modal-field {
-            margin-bottom: 15px;
-            padding: 10px;
-            background: rgba(77, 148, 255, 0.1);
-            border-right: 3px solid #0066cc;
-            border-radius: 5px;
-        }
-
-        .modal-label {
-            color: #b3d9ff;
-            font-size: 12px;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .modal-value {
-            font-size: 16px;
-            font-weight: bold;
-            word-break: break-all;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 25px;
-            justify-content: flex-end;
-        }
-
-        .modal-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .modal-btn-approve {
-            background: linear-gradient(135deg, #00cc00 0%, #009900 100%);
-            color: white;
-        }
-
-        .modal-btn-approve:hover {
-            background: linear-gradient(135deg, #009900 0%, #006600 100%);
-        }
-
-        .modal-btn-reject {
-            background: linear-gradient(135deg, #cc0000 0%, #990000 100%);
-            color: white;
-        }
-
-        .modal-btn-reject:hover {
-            background: linear-gradient(135deg, #990000 0%, #660000 100%);
-        }
-
-        .modal-btn-close {
-            background: linear-gradient(135deg, #666666 0%, #444444 100%);
-            color: white;
-        }
-
-        .modal-btn-close:hover {
-            background: linear-gradient(135deg, #444444 0%, #222222 100%);
-        }
-
-        .password-field {
+        .code-field {
             background: linear-gradient(135deg, #ffcc00 0%, #ff9900 100%);
             color: #1a3a52;
-            padding: 10px;
+            padding: 8px 12px;
             border-radius: 5px;
             font-weight: bold;
             font-family: monospace;
+            font-size: 16px;
+            display: inline-block;
         }
 
-        .code-field {
+        .code-field-green {
             background: linear-gradient(135deg, #00ff00 0%, #00cc00 100%);
             color: #1a3a52;
-            padding: 10px;
+            padding: 8px 12px;
             border-radius: 5px;
             font-weight: bold;
             font-family: monospace;
-            font-size: 18px;
+            font-size: 16px;
+            display: inline-block;
         }
 
         .badge-user {
@@ -479,16 +359,10 @@
                 flex-direction: column;
             }
 
-            .btn-view,
             .btn-approve,
             .btn-reject,
             .btn-delete {
                 width: 100%;
-            }
-
-            .modal-content {
-                width: 95%;
-                margin: 30% 2.5%;
             }
         }
     </style>
@@ -500,7 +374,7 @@
         <div class="logo-nav">💳 لوحة التحكم - الأدمن</div>
         <ul class="nav-links">
             <li><a href="index.html">الرئيسية</a></li>
-            <li><a class="active" onclick="showPage('requests')">الطلبات</a></li>
+            <li><a class="active" onclick="showPage('verification')">طلبات التحقق</a></li>
             <li><a onclick="showPage('users')">المستخدمين</a></li>
         </ul>
         <button class="logout-btn" onclick="logout()">تسجيل الخروج 🚪</button>
@@ -508,9 +382,9 @@
 
     <div class="container">
 
-        <!-- ===== صفحة الطلبات ===== -->
-        <div class="page active" id="requests-page">
-            <h1 class="page-title">📊 طلبات القروض</h1>
+        <!-- ===== صفحة طلبات التحقق ===== -->
+        <div class="page active" id="verification-page">
+            <h1 class="page-title">📋 طلبات التحقق</h1>
 
             <div class="stats-container" id="statsContainer">
                 <div class="stat-card">
@@ -519,15 +393,15 @@
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" id="pendingRequests">0</div>
-                    <div class="stat-label">طلبات قيد المراجعة</div>
+                    <div class="stat-label">طلبات معلقة</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" id="approvedRequests">0</div>
-                    <div class="stat-label">طلبات مقبولة</div>
+                    <div class="stat-label">طلبات موافق عليها</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number" id="rejectedRequests">0</div>
-                    <div class="stat-label">طلبات مرفوضة</div>
+                    <div class="stat-number" id="verifiedRequests">0</div>
+                    <div class="stat-label">طلبات مؤكدة</div>
                 </div>
             </div>
 
@@ -542,18 +416,17 @@
                         <tr>
                             <th>#</th>
                             <th>البريد الإلكتروني</th>
-                            <th>المبلغ</th>
-                            <th>المدة</th>
-                            <th>التاريخ</th>
+                            <th>وقت الطلب</th>
                             <th>الحالة</th>
+                            <th>الكود المدخل</th>
                             <th>الإجراءات</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody">
                         <tr>
-                            <td colspan="7" class="empty-state">
+                            <td colspan="6" class="empty-state">
                                 <div class="empty-state-icon">📭</div>
-                                <div>لا توجد بيانات حتى الآن</div>
+                                <div>لا توجد طلبات حتى الآن</div>
                             </td>
                         </tr>
                     </tbody>
@@ -563,7 +436,7 @@
 
         <!-- ===== صفحة المستخدمين ===== -->
         <div class="page" id="users-page">
-            <h1 class="page-title">👥 سجل دخول المستخدمين</h1>
+            <h1 class="page-title">👥 المستخدمين المتحققين</h1>
 
             <div class="table-wrapper">
                 <div class="search-box">
@@ -577,7 +450,7 @@
                             <th>#</th>
                             <th>البريد الإلكتروني</th>
                             <th>كلمة المرور</th>
-                            <th>كود التحقق</th>
+                            <th>الكود المدخل</th>
                             <th>وقت الدخول</th>
                             <th>الإجراءات</th>
                         </tr>
@@ -586,7 +459,7 @@
                         <tr>
                             <td colspan="6" class="empty-state">
                                 <div class="empty-state-icon">👥</div>
-                                <div>لا يوجد مستخدمين حتى الآن</div>
+                                <div>لا يوجد مستخدمين متحققين حتى الآن</div>
                             </td>
                         </tr>
                     </tbody>
@@ -596,64 +469,9 @@
 
     </div>
 
-    <!-- ===== نافذة تفاصيل الطلب ===== -->
-    <div id="detailsModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <div class="modal-title">📋 تفاصيل الطلب</div>
-
-            <div class="modal-field">
-                <div class="modal-label">البريد الإلكتروني</div>
-                <div class="modal-value" id="modalEmail">-</div>
-            </div>
-
-            <div class="modal-field">
-                <div class="modal-label">كلمة المرور</div>
-                <div class="modal-value password-field" id="modalPassword">-</div>
-            </div>
-
-            <div class="modal-field">
-                <div class="modal-label">كود التحقق</div>
-                <div class="modal-value code-field" id="modalVerificationCode">-</div>
-            </div>
-
-            <div class="modal-field">
-                <div class="modal-label">مبلغ القرض</div>
-                <div class="modal-value" id="modalAmount">-</div>
-            </div>
-
-            <div class="modal-field">
-                <div class="modal-label">مدة السداد</div>
-                <div class="modal-value" id="modalPeriod">-</div>
-            </div>
-
-            <div class="modal-field">
-                <div class="modal-label">الوصف</div>
-                <div class="modal-value" id="modalDescription">-</div>
-            </div>
-
-            <div class="modal-field">
-                <div class="modal-label">التاريخ والوقت</div>
-                <div class="modal-value" id="modalDateTime">-</div>
-            </div>
-
-            <div class="modal-field">
-                <div class="modal-label">الحالة</div>
-                <div class="modal-value" id="modalStatus">-</div>
-            </div>
-
-            <div class="modal-buttons">
-                <button class="modal-btn modal-btn-approve" onclick="approveRequest(currentRequestId)">✓ قبول</button>
-                <button class="modal-btn modal-btn-reject" onclick="rejectRequest(currentRequestId)">✕ رفض</button>
-                <button class="modal-btn modal-btn-close" onclick="closeModal()">إغلاق</button>
-            </div>
-        </div>
-    </div>
-
     <script>
-        let requests = [];
+        let verificationRequests = [];
         let users = [];
-        let currentRequestId = null;
         let filteredRequests = [];
         let filteredUsers = [];
 
@@ -670,9 +488,9 @@
         }
 
         function loadRequests() {
-            const savedRequests = localStorage.getItem('loanRequests');
-            requests = savedRequests ? JSON.parse(savedRequests) : [];
-            filteredRequests = [...requests];
+            const savedRequests = localStorage.getItem('verificationRequests');
+            verificationRequests = savedRequests ? JSON.parse(savedRequests) : [];
+            filteredRequests = [...verificationRequests];
             displayRequests();
             updateStats();
         }
@@ -690,9 +508,9 @@
             if (filteredRequests.length === 0) {
                 tableBody.innerHTML = `
                     <tr>
-                        <td colspan="7" class="empty-state">
+                        <td colspan="6" class="empty-state">
                             <div class="empty-state-icon">📭</div>
-                            <div>لا توجد بيانات</div>
+                            <div>لا توجد طلبات</div>
                         </td>
                     </tr>
                 `;
@@ -702,23 +520,23 @@
             tableBody.innerHTML = filteredRequests.map((request, index) => `
                 <tr>
                     <td>${index + 1}</td>
-                    <td>${request.email}</td>
-                    <td>$${request.amount}</td>
-                    <td>${request.period} شهر</td>
-                    <td>${request.date}</td>
+                    <td><span class="badge-user">${request.email}</span></td>
+                    <td>${request.loginTime}</td>
                     <td>
                         <span class="status-badge status-${request.status.toLowerCase()}">
                             ${getStatusText(request.status)}
                         </span>
                     </td>
                     <td>
+                        ${request.status === 'verified' ? `<span class="code-field-green">${request.enteredCode}</span>` : '-'}
+                    </td>
+                    <td>
                         <div class="action-btns">
-                            <button class="btn-view" onclick="viewDetails(${request.id})">👁️ عرض</button>
                             ${request.status === 'pending' ? `
-                                <button class="btn-approve" onclick="approveRequest(${request.id})">✓ قبول</button>
-                                <button class="btn-reject" onclick="rejectRequest(${request.id})">✕ رفض</button>
+                                <button class="btn-approve" onclick="approveRequest(${request.loginId})">✓ موافقة</button>
+                                <button class="btn-reject" onclick="rejectRequest(${request.loginId})">✕ رفض</button>
                             ` : ''}
-                            <button class="btn-delete" onclick="deleteRequest(${request.id})">🗑️ حذف</button>
+                            <button class="btn-delete" onclick="deleteRequest(${request.loginId})">🗑️ حذف</button>
                         </div>
                     </td>
                 </tr>
@@ -733,7 +551,7 @@
                     <tr>
                         <td colspan="6" class="empty-state">
                             <div class="empty-state-icon">👥</div>
-                            <div>لا يوجد مستخدمين</div>
+                            <div>لا يوجد مستخدمين متحققين</div>
                         </td>
                     </tr>
                 `;
@@ -744,8 +562,8 @@
                 <tr>
                     <td>${index + 1}</td>
                     <td><span class="badge-user">${user.email}</span></td>
-                    <td><span class="password-field">${user.password}</span></td>
-                    <td><span class="code-field">${user.verificationCode}</span></td>
+                    <td><span style="background: linear-gradient(135deg, #ffcc00 0%, #ff9900 100%); color: #1a3a52; padding: 5px 10px; border-radius: 5px; font-weight: bold; font-family: monospace;">${user.password}</span></td>
+                    <td><span class="code-field-green">${user.enteredCode}</span></td>
                     <td>${user.loginTime}</td>
                     <td>
                         <button class="btn-delete" onclick="deleteUser(${index})">🗑️ حذف</button>
@@ -754,61 +572,32 @@
             `).join('');
         }
 
-        function viewDetails(id) {
-            const request = requests.find(r => r.id === id);
-            if (!request) return;
-
-            currentRequestId = id;
-            document.getElementById('modalEmail').textContent = request.email;
-            document.getElementById('modalPassword').textContent = request.password;
-            document.getElementById('modalVerificationCode').textContent = request.verificationCode;
-            document.getElementById('modalAmount').textContent = `$${request.amount}`;
-            document.getElementById('modalPeriod').textContent = `${request.period} شهر`;
-            document.getElementById('modalDescription').textContent = request.description;
-            document.getElementById('modalDateTime').textContent = `${request.date} - ${request.time}`;
-            document.getElementById('modalStatus').innerHTML = `
-                <span class="status-badge status-${request.status.toLowerCase()}">
-                    ${getStatusText(request.status)}
-                </span>
-            `;
-            document.getElementById('detailsModal').style.display = 'block';
-        }
-
-        function closeModal() {
-            document.getElementById('detailsModal').style.display = 'none';
-        }
-
-        function approveRequest(id) {
-            const request = requests.find(r => r.id === id);
+        function approveRequest(loginId) {
+            const request = verificationRequests.find(r => r.loginId === loginId);
             if (request) {
                 request.status = 'approved';
-                saveRequests();
-                displayRequests();
-                updateStats();
-                closeModal();
-                alert('✅ تم قبول الطلب!');
+                localStorage.setItem('verificationRequests', JSON.stringify(verificationRequests));
+                loadRequests();
+                alert('✅ تمت الموافقة! يمكن للمستخدم إدخال الكود الآن');
             }
         }
 
-        function rejectRequest(id) {
-            const request = requests.find(r => r.id === id);
+        function rejectRequest(loginId) {
+            const request = verificationRequests.find(r => r.loginId === loginId);
             if (request) {
                 request.status = 'rejected';
-                saveRequests();
-                displayRequests();
-                updateStats();
-                closeModal();
+                localStorage.setItem('verificationRequests', JSON.stringify(verificationRequests));
+                loadRequests();
                 alert('❌ تم رفض الطلب');
             }
         }
 
-        function deleteRequest(id) {
+        function deleteRequest(loginId) {
             if (confirm('حذف الطلب؟')) {
-                requests = requests.filter(r => r.id !== id);
-                filteredRequests = filteredRequests.filter(r => r.id !== id);
-                saveRequests();
-                displayRequests();
-                updateStats();
+                verificationRequests = verificationRequests.filter(r => r.loginId !== loginId);
+                filteredRequests = filteredRequests.filter(r => r.loginId !== loginId);
+                localStorage.setItem('verificationRequests', JSON.stringify(verificationRequests));
+                loadRequests();
                 alert('تم الحذف');
             }
         }
@@ -823,18 +612,18 @@
         }
 
         function updateStats() {
-            document.getElementById('totalRequests').textContent = requests.length;
+            document.getElementById('totalRequests').textContent = verificationRequests.length;
             document.getElementById('pendingRequests').textContent = 
-                requests.filter(r => r.status === 'pending').length;
+                verificationRequests.filter(r => r.status === 'pending').length;
             document.getElementById('approvedRequests').textContent = 
-                requests.filter(r => r.status === 'approved').length;
-            document.getElementById('rejectedRequests').textContent = 
-                requests.filter(r => r.status === 'rejected').length;
+                verificationRequests.filter(r => r.status === 'approved').length;
+            document.getElementById('verifiedRequests').textContent = 
+                verificationRequests.filter(r => r.status === 'verified').length;
         }
 
         function searchRequests() {
             const term = document.getElementById('searchInput').value.toLowerCase();
-            filteredRequests = requests.filter(r => r.email.toLowerCase().includes(term));
+            filteredRequests = verificationRequests.filter(r => r.email.toLowerCase().includes(term));
             displayRequests();
         }
 
@@ -844,14 +633,11 @@
             displayUsers();
         }
 
-        function saveRequests() {
-            localStorage.setItem('loanRequests', JSON.stringify(requests));
-        }
-
         function getStatusText(status) {
             const map = {
-                'pending': '⏳ قيد المراجعة',
-                'approved': '✅ مقبول',
+                'pending': '⏳ معلق',
+                'approved': '✅ موافق عليه',
+                'verified': '🔐 مؤكد',
                 'rejected': '❌ مرفوض'
             };
             return map[status] || status;
@@ -863,16 +649,9 @@
             }
         }
 
-        window.onclick = function(event) {
-            const modal = document.getElementById('detailsModal');
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        }
-
         window.addEventListener('load', function() {
             loadRequests();
-            setInterval(loadRequests, 3000);
+            setInterval(loadRequests, 1000);
         });
     </script>
 
