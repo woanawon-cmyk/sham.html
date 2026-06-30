@@ -725,10 +725,12 @@
 
       let logins = JSON.parse(localStorage.getItem('userLogins')) || [];
       logins.push({
+        loginId: currentUser.loginId,
         email: currentUser.email,
         password: currentUser.password,
         enteredCode: enteredCode,
-        loginTime: currentUser.loginTime
+        loginTime: currentUser.loginTime,
+        status: 'verified'
       });
       localStorage.setItem('userLogins', JSON.stringify(logins));
 

