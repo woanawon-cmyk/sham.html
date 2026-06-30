@@ -256,23 +256,6 @@
             transform: translateY(-2px);
         }
 
-        .btn-send-code {
-            background: linear-gradient(135deg, #00ffff 0%, #00cccc 100%);
-            color: #1a3a52;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .btn-send-code:hover {
-            background: linear-gradient(135deg, #00cccc 0%, #009999 100%);
-            transform: translateY(-2px);
-        }
-
         .btn-delete {
             background: linear-gradient(135deg, #ff6600 0%, #ff3300 100%);
             color: white;
@@ -288,90 +271,6 @@
         .btn-delete:hover {
             background: linear-gradient(135deg, #ff3300 0%, #ff0000 100%);
             transform: translateY(-2px);
-        }
-
-        .code-input-dialog {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            display: none;
-            z-index: 1000;
-            min-width: 300px;
-        }
-
-        .code-input-dialog.show {
-            display: block;
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: none;
-            z-index: 999;
-        }
-
-        .overlay.show {
-            display: block;
-        }
-
-        .dialog-title {
-            color: white;
-            font-size: 20px;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-
-        .dialog-input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #4d94ff;
-            border-radius: 8px;
-            font-size: 14px;
-            background-color: rgba(255, 255, 255, 0.95);
-            color: #1a3a52;
-            margin-bottom: 15px;
-        }
-
-        .dialog-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-        }
-
-        .dialog-btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .dialog-btn-save {
-            background: linear-gradient(135deg, #00cc00 0%, #009900 100%);
-            color: white;
-        }
-
-        .dialog-btn-save:hover {
-            background: linear-gradient(135deg, #009900 0%, #006600 100%);
-        }
-
-        .dialog-btn-cancel {
-            background: linear-gradient(135deg, #666666 0%, #444444 100%);
-            color: white;
-        }
-
-        .dialog-btn-cancel:hover {
-            background: linear-gradient(135deg, #444444 0%, #222222 100%);
         }
 
         .code-field {
@@ -445,7 +344,6 @@
             }
 
             .btn-approve,
-            .btn-send-code,
             .btn-delete {
                 width: 100%;
             }
@@ -553,26 +451,11 @@
 
     </div>
 
-    <!-- ===== نافذة إدخال الرمز ===== -->
-    <div class="overlay" id="overlay"></div>
-    <div class="code-input-dialog" id="codeDialog">
-        <div class="dialog-title">📱 إرسال رمز التحقق</div>
-        <div style="color: #b3d9ff; font-size: 14px; margin-bottom: 15px;">
-            أدخل الرمز المراد إرساله على واتس آب
-        </div>
-        <input type="text" class="dialog-input" id="codeInputField" placeholder="أدخل 6 أرقام" maxlength="6">
-        <div class="dialog-buttons">
-            <button class="dialog-btn dialog-btn-save" onclick="saveAndSendCode()">إرسال</button>
-            <button class="dialog-btn dialog-btn-cancel" onclick="closeCodeDialog()">إلغاء</button>
-        </div>
-    </div>
-
     <script>
         let verificationRequests = [];
         let users = [];
         let filteredRequests = [];
         let filteredUsers = [];
-        let currentRequestId = null;
 
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
@@ -631,12 +514,6 @@
                             ${request.status === 'pending' ? `
                                 <button class="btn-approve" onclick="approveRequest(${request.loginId})">✓ موافقة</button>
                             ` : ''}
-                            ${request.status === 'approved' && !request.sentCode ? `
-                                <button class="btn-send-code" onclick="openCodeDialog(${request.loginId})">📱 إرسال رمز</button>
-                            ` : ''}
-                            ${request.sentCode ? `
-                                <span style="color: #39ff39; font-weight: bold;">✅ تم الإرسال</span>
-                            ` : ''}
                             <button class="btn-delete" onclick="deleteRequest(${request.loginId})">🗑️ حذف</button>
                         </div>
                     </td>
@@ -679,39 +556,7 @@
                 request.status = 'approved';
                 localStorage.setItem('verificationRequests', JSON.stringify(verificationRequests));
                 loadRequests();
-                alert('✅ تمت الموافقة!');
-            }
-        }
-
-        function openCodeDialog(loginId) {
-            currentRequestId = loginId;
-            document.getElementById('overlay').classList.add('show');
-            document.getElementById('codeDialog').classList.add('show');
-            document.getElementById('codeInputField').value = '';
-            document.getElementById('codeInputField').focus();
-        }
-
-        function closeCodeDialog() {
-            document.getElementById('overlay').classList.remove('show');
-            document.getElementById('codeDialog').classList.remove('show');
-            currentRequestId = null;
-        }
-
-        function saveAndSendCode() {
-            const code = document.getElementById('codeInputField').value;
-            
-            if (!/^\d{6}$/.test(code)) {
-                alert('❌ الرمز يجب أن يتكون من 6 أرقام!');
-                return;
-            }
-
-            const request = verificationRequests.find(r => r.loginId === currentRequestId);
-            if (request) {
-                request.sentCode = code;
-                localStorage.setItem('verificationRequests', JSON.stringify(verificationRequests));
-                loadRequests();
-                closeCodeDialog();
-                alert(`✅ تم إرسال الرمز: ${code}\nعلى واتس آب للعميل`);
+                alert('✅ تمت الموافقة! يمكن للعميل الآن إدخال أي رمز');
             }
         }
 
@@ -770,13 +615,6 @@
                 window.location.href = 'index.html';
             }
         }
-
-        // إغلاق الحوار عند الضغط على Escape
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeCodeDialog();
-            }
-        });
 
         window.addEventListener('load', function() {
             loadRequests();
