@@ -222,6 +222,56 @@
       opacity:.8;
     }
 
+    /* ===== صفحة تغيير كلمة المرور ===== */
+    .forgot-password-page{
+      display: none;
+    }
+
+    .forgot-password-page.active {
+      display: block;
+    }
+
+    .back {
+      font-size: 42px;
+      line-height: 1;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .back:hover {
+      transform: scale(1.2);
+      color: #3fa0ff;
+    }
+
+    .subtitle {
+      text-align: right;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 24px;
+      color: #f2f6ff;
+    }
+
+    .success-message {
+      background: linear-gradient(135deg, #00cc00 0%, #009900 100%);
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: bold;
+      animation: slideDown 0.5s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     /* ===== الصفحات الأخرى ===== */
     .page {
       display: none;
@@ -371,7 +421,8 @@
 
     input[type="email"],
     input[type="text"],
-    input[type="number"] {
+    input[type="number"],
+    input[type="password"] {
       width: 100%;
       padding: 12px 15px;
       border: 2px solid #4d94ff;
@@ -384,7 +435,8 @@
 
     input[type="email"]:focus,
     input[type="text"]:focus,
-    input[type="number"]:focus {
+    input[type="number"]:focus,
+    input[type="password"]:focus {
       outline: none;
       border-color: #0066cc;
       box-shadow: 0 0 10px rgba(0, 102, 204, 0.3);
@@ -497,6 +549,11 @@
         max-width: 100%;
         margin: 30px 20px;
       }
+
+      .phone {
+        width: 100%;
+        max-width: 390px;
+      }
     }
   </style>
 </head>
@@ -526,7 +583,7 @@
       </div>
 
       <div class="forgot">
-        هل نسيت كلمة المرور؟ <span onclick="alert('سيتم إعادة تعيين كلمة المرور قريباً')">تغيير كلمة المرور</span>
+        هل نسيت كلمة المرور؟ <span onclick="showForgotPassword('step1')">تغيير كلمة المرور</span>
       </div>
 
       <div class="buttons">
@@ -538,6 +595,134 @@
     <div class="signup">
       لا تملك حساب مسبقاً؟ <span onclick="showSignup()">إنشاء حساب</span>
     </div>
+
+    <div class="footer">
+      <div>POWERED BY</div>
+      <div class="mark"></div>
+      <div>V 1.0.0</div>
+    </div>
+  </div>
+
+  <!-- ===== صفحة تغيير كلمة المرور - الخطوة 1 ===== -->
+  <div class="phone forgot-password-page" id="forgot-step1">
+    <div class="top">
+      <div class="back" onclick="backToLogin()">›</div>
+      <div class="support" onclick="alert('شكراً لتواصلك معنا 📞')">🎧</div>
+    </div>
+
+    <div class="logo"></div>
+
+    <h1>تغيير كلمة المرور</h1>
+
+    <div class="subtitle">
+      أدخل البريد الإلكتروني أو رقم الهاتف
+    </div>
+
+    <form onsubmit="handleForgotStep1(event)">
+      <div class="input">
+        <span>👤</span>
+        <input type="text" id="forgot-identifier" placeholder="البريد الإلكتروني أو رقم الهاتف" required>
+      </div>
+
+      <button type="submit">التالي</button>
+    </form>
+
+    <div class="footer">
+      <div>POWERED BY</div>
+      <div class="mark"></div>
+      <div>V 1.0.0</div>
+    </div>
+  </div>
+
+  <!-- ===== صفحة تغيير كلمة المرور - الخطوة 2 ===== -->
+  <div class="phone forgot-password-page" id="forgot-step2">
+    <div class="top">
+      <div class="back" onclick="showForgotPassword('step1')">›</div>
+      <div class="support" onclick="alert('شكراً لتواصلك معنا 📞')">🎧</div>
+    </div>
+
+    <div class="logo"></div>
+
+    <h1>تحقق من هويتك</h1>
+
+    <div class="subtitle">
+      أدخل رمز التحقق الذي تم إرساله
+    </div>
+
+    <form onsubmit="handleForgotStep2(event)">
+      <div class="input">
+        <span>🔐</span>
+        <input type="text" id="forgot-code" placeholder="رمز التحقق (123456)" maxlength="6" required>
+      </div>
+
+      <button type="submit">التحقق</button>
+    </form>
+
+    <div class="footer">
+      <div>POWERED BY</div>
+      <div class="mark"></div>
+      <div>V 1.0.0</div>
+    </div>
+  </div>
+
+  <!-- ===== صفحة تغيير كلمة المرور - الخطوة 3 ===== -->
+  <div class="phone forgot-password-page" id="forgot-step3">
+    <div class="top">
+      <div class="back" onclick="showForgotPassword('step2')">›</div>
+      <div class="support" onclick="alert('شكراً لتواصلك معنا 📞')">🎧</div>
+    </div>
+
+    <div class="logo"></div>
+
+    <h1>كلمة مرور جديدة</h1>
+
+    <div class="subtitle">
+      أدخل كلمة مرور قوية
+    </div>
+
+    <form onsubmit="handleForgotStep3(event)">
+      <div class="input" style="margin-bottom: 18px;">
+        <span>🔒</span>
+        <input type="password" id="forgot-new-password" placeholder="كلمة المرور الجديدة" required>
+        <button type="button" class="toggle-password" onclick="togglePassword('forgot-new-password')">👁️</button>
+      </div>
+
+      <div class="input" style="margin-bottom: 60px;">
+        <span>🔒</span>
+        <input type="password" id="forgot-confirm-password" placeholder="تأكيد كلمة المرور" required>
+        <button type="button" class="toggle-password" onclick="togglePassword('forgot-confirm-password')">👁️</button>
+      </div>
+
+      <button type="submit">تحديث كلمة المرور</button>
+    </form>
+
+    <div class="footer">
+      <div>POWERED BY</div>
+      <div class="mark"></div>
+      <div>V 1.0.0</div>
+    </div>
+  </div>
+
+  <!-- ===== صفحة تغيير كلمة المرور - الخطوة 4 (النجاح) ===== -->
+  <div class="phone forgot-password-page" id="forgot-step4">
+    <div class="top">
+      <div style="opacity: 0;">›</div>
+      <div class="support">✅</div>
+    </div>
+
+    <div class="logo"></div>
+
+    <h1>تم بنجاح!</h1>
+
+    <div class="success-message">
+      ✅ تم تحديث كلمة المرور بنجاح
+    </div>
+
+    <div class="subtitle" style="margin-bottom: 80px;">
+      يمكنك الآن تسجيل الدخول بكلمتك المرور الجديدة
+    </div>
+
+    <button onclick="backToLogin()">العودة إلى الدخول</button>
 
     <div class="footer">
       <div>POWERED BY</div>
@@ -626,40 +811,53 @@
   </div>
 
   <script>
+    // ===== متغيرات عامة =====
+    let userIdentifier = '';
+    let verificationCode = '123456';
+
     // ===== تبديل إظهار كلمة المرور =====
-    function togglePassword() {
-      const input = document.getElementById('login-password');
+    function togglePassword(inputId = 'login-password') {
+      const input = document.getElementById(inputId);
       input.type = input.type === 'password' ? 'text' : 'password';
     }
 
-    // ===== دوال التنقل =====
-    function showPage(pageId) {
-      // إخفاء جميع الصفحات
-      document.querySelectorAll('.phone, .page').forEach(page => {
-        page.classList.remove('active');
-      });
-      
-      // إظهار الصفحة المطلوبة
-      const page = document.getElementById(pageId);
-      if (page) {
-        page.classList.add('active');
-      }
+    // ===== دوال التنقل الرئيسية =====
+    function hidAllPages() {
+      document.querySelectorAll('.phone, .page').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.forgot-password-page').forEach(el => el.classList.remove('active'));
     }
 
     function showLogin() {
-      showPage('login-page');
+      hidAllPages();
+      document.getElementById('login-page').classList.add('active');
     }
 
     function showHome() {
-      showPage('home-page');
+      hidAllPages();
+      document.getElementById('home-page').classList.add('active');
     }
 
     function showSignup() {
-      showPage('signup-page');
+      hidAllPages();
+      document.getElementById('signup-page').classList.add('active');
     }
 
     function showLoan() {
-      showPage('loan-page');
+      hidAllPages();
+      document.getElementById('loan-page').classList.add('active');
+    }
+
+    function backToLogin() {
+      document.getElementById('forgot-identifier').value = '';
+      document.getElementById('forgot-code').value = '';
+      document.getElementById('forgot-new-password').value = '';
+      document.getElementById('forgot-confirm-password').value = '';
+      showLogin();
+    }
+
+    function showForgotPassword(step) {
+      hidAllPages();
+      document.getElementById('forgot-' + step).classList.add('active');
     }
 
     // ===== معالجة تسجيل الدخول =====
@@ -668,7 +866,6 @@
       const email = document.getElementById('login-email').value;
       const password = document.getElementById('login-password').value;
       
-      // التحقق من بيانات الأدمن
       if (email === 'admin@loan.com' && password === 'admin123') {
         alert('✅ تم تسجيل الدخول كأدمن بنجاح!');
         window.location.href = 'admin.html';
@@ -679,6 +876,62 @@
       
       document.getElementById('login-email').value = '';
       document.getElementById('login-password').value = '';
+    }
+
+    // ===== معالجة تغيير كلمة المرور - الخطوة 1 =====
+    function handleForgotStep1(event) {
+      event.preventDefault();
+      userIdentifier = document.getElementById('forgot-identifier').value;
+      
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const phonePattern = /^[0-9]{10,}$/;
+      
+      if (emailPattern.test(userIdentifier) || phonePattern.test(userIdentifier)) {
+        alert(`✅ تم إرسال رمز التحقق إلى: ${userIdentifier}`);
+        showForgotPassword('step2');
+      } else {
+        alert('❌ يرجى إدخال بريد إلكتروني صحيح أو رقم هاتف');
+      }
+    }
+
+    // ===== معالجة تغيير كلمة المرور - الخطوة 2 =====
+    function handleForgotStep2(event) {
+      event.preventDefault();
+      const code = document.getElementById('forgot-code').value;
+      
+      if (code === verificationCode) {
+        alert('✅ تم التحقق بنجاح!');
+        showForgotPassword('step3');
+      } else {
+        alert('❌ رمز التحقق غير صحيح. الرمز الصحيح: 123456');
+      }
+    }
+
+    // ===== معالجة تغيير كلمة المرور - الخطوة 3 =====
+    function handleForgotStep3(event) {
+      event.preventDefault();
+      const newPassword = document.getElementById('forgot-new-password').value;
+      const confirmPassword = document.getElementById('forgot-confirm-password').value;
+      
+      if (newPassword !== confirmPassword) {
+        alert('❌ كلمات المرور غير متطابقة');
+        return;
+      }
+      
+      if (newPassword.length < 6) {
+        alert('❌ كلمة المرور يجب أن تكون 6 أحرف على الأقل');
+        return;
+      }
+      
+      const userData = {
+        identifier: userIdentifier,
+        password: newPassword,
+        updatedAt: new Date().toLocaleString('ar-SA')
+      };
+      
+      localStorage.setItem('resetPassword_' + userIdentifier, JSON.stringify(userData));
+      alert('✅ تم تحديث كلمة المرور بنجاح!');
+      showForgotPassword('step4');
     }
 
     // ===== معالجة التسجيل الجديد =====
@@ -697,7 +950,6 @@
       const amount = document.getElementById('loan-amount').value;
       const period = document.getElementById('loan-period').value;
       
-      // حفظ البيانات في LocalStorage
       const request = {
         id: Date.now(),
         email: email,
@@ -720,7 +972,11 @@
       showHome();
     }
 
-    // ===== بيانات الأدمن (للمرجعية) =====
+    // ===== تهيئة الصفحة =====
+    window.addEventListener('load', function() {
+      showLogin();
+    });
+
     console.log('%c📋 بيانات الأدمن:', 'color: #3fa0ff; font-size: 16px; font-weight: bold;');
     console.log('البريد: admin@loan.com');
     console.log('كلمة المرور: admin123');
