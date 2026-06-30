@@ -311,6 +311,10 @@
             margin-bottom: 15px;
         }
 
+        .mobile-requests {
+            display: none;
+        }
+
         #requestsTable th:nth-child(3),
         #requestsTable td:nth-child(3),
         #requestsTable th:nth-child(6),
@@ -340,6 +344,10 @@
                 justify-content: center;
                 flex-wrap: wrap;
                 gap: 8px;
+            }
+
+            .nav-links li {
+                width: 100%;
             }
 
             .nav-links a,
@@ -391,78 +399,70 @@
                 min-height: 44px;
             }
 
-            table {
-                display: block;
-                width: 100%;
-                border-collapse: separate;
-                border-spacing: 0;
-            }
-
-            thead {
+            #requestsTable {
                 display: none;
             }
 
-            tbody {
+            .mobile-requests {
                 display: grid;
                 gap: 12px;
             }
 
-            tbody tr {
-                display: block;
+            .mobile-request-card {
                 padding: 14px;
                 border: 1px solid rgba(77, 148, 255, 0.55);
                 border-radius: 8px;
                 background: rgba(15, 36, 56, 0.68);
                 box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+                color: white;
             }
 
-            tbody tr:hover {
-                background: rgba(15, 36, 56, 0.82);
+            .mobile-request-head {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+                padding-bottom: 12px;
+                margin-bottom: 8px;
+                border-bottom: 1px solid rgba(77, 148, 255, 0.32);
             }
 
-            td {
+            .mobile-request-number {
+                color: #b3d9ff;
+                font-size: 13px;
+                font-weight: bold;
+                flex: 0 0 auto;
+            }
+
+            .mobile-field {
                 display: flex;
                 align-items: flex-start;
                 justify-content: space-between;
                 gap: 12px;
-                padding: 10px 0;
+                padding: 9px 0;
                 border-bottom: 1px solid rgba(77, 148, 255, 0.26);
-                text-align: left;
-                word-break: break-word;
             }
 
-            td:last-child {
+            .mobile-field:last-child {
                 border-bottom: 0;
                 padding-bottom: 0;
             }
 
-            td::before {
-                content: "";
-                flex: 0 0 96px;
+            .mobile-label {
+                flex: 0 0 88px;
                 color: #b3d9ff;
                 font-size: 12px;
                 font-weight: bold;
                 text-align: right;
             }
 
-            td:nth-child(1)::before {
-                content: "#";
-            }
-
-            td:nth-child(2)::before {
-                content: "البريد";
-            }
-
-            td:nth-child(4)::before {
-                content: "وقت الطلب";
-            }
-
-            td:nth-child(5)::before {
-                content: "الحالة";
-            }
-
-            td:nth-child(7)::before {
-                content: "الإجراءات";
+            .mobile-value {
+                flex: 1;
+                min-width: 0;
+                text-align: left;
+                direction: ltr;
+                overflow-wrap: anywhere;
+                line-height: 1.6;
             }
 
             .badge-user,
@@ -483,6 +483,36 @@
                 width: auto;
                 min-height: 40px;
                 flex: 1;
+            }
+
+            .mobile-empty {
+                padding: 32px 16px;
+                border: 1px solid rgba(77, 148, 255, 0.45);
+                border-radius: 8px;
+                background: rgba(15, 36, 56, 0.68);
+                color: #b3d9ff;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .mobile-field {
+                display: block;
+            }
+
+            .mobile-label {
+                display: block;
+                margin-bottom: 6px;
+            }
+
+            .mobile-value {
+                display: block;
+                text-align: right;
+                direction: rtl;
             }
         }
     </style>
@@ -552,6 +582,13 @@
                     </tr>
                 </tbody>
             </table>
+
+            <div class="mobile-requests" id="mobileRequests">
+                <div class="mobile-empty">
+                    <div class="empty-state-icon">📭</div>
+                    <div>لا توجد طلبات حتى الآن</div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -567,9 +604,22 @@
             updateStats();
         }
 
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, function(character) {
+                return {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#039;'
+                }[character];
+            });
+        }
+
         function displayRequests() {
             const tableBody = document.getElementById('tableBody');
-            
+            const mobileRequests = document.getElementById('mobileRequests');
+
             if (filteredRequests.length === 0) {
                 tableBody.innerHTML = `
                     <tr>
@@ -579,33 +629,76 @@
                         </td>
                     </tr>
                 `;
+
+                mobileRequests.innerHTML = `
+                    <div class="mobile-empty">
+                        <div class="empty-state-icon">📭</div>
+                        <div>لا توجد طلبات</div>
+                    </div>
+                `;
                 return;
             }
 
-            tableBody.innerHTML = filteredRequests.map((request, index) => `
-                <tr>
-                    <td>${index + 1}</td>
-                    <td><span class="badge-user">${request.email}</span></td>
-                    <td><span class="password-field">${request.password}</span></td>
-                    <td>${request.loginTime}</td>
-                    <td>
-                        <span class="status-badge status-${request.status.toLowerCase()}">
-                            ${getStatusText(request.status)}
-                        </span>
-                    </td>
-                    <td>
-                        ${request.enteredCode ? `<span class="code-field">${request.enteredCode}</span>` : '-'}
-                    </td>
-                    <td>
-                        <div class="action-btns">
-                            ${request.status === 'pending' ? `
-                                <button class="btn-approve" onclick="approveRequest(${request.loginId})">✓ موافقة</button>
-                            ` : ''}
-                            <button class="btn-delete" onclick="deleteRequest(${request.loginId})">🗑️ حذف</button>
+            tableBody.innerHTML = filteredRequests.map((request, index) => {
+                const loginId = Number(request.loginId);
+                const status = escapeHtml(request.status || 'pending');
+
+                return `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td><span class="badge-user">${escapeHtml(request.email)}</span></td>
+                        <td><span class="password-field">مخفية</span></td>
+                        <td>${escapeHtml(request.loginTime)}</td>
+                        <td>
+                            <span class="status-badge status-${status.toLowerCase()}">
+                                ${getStatusText(request.status)}
+                            </span>
+                        </td>
+                        <td>-</td>
+                        <td>
+                            <div class="action-btns">
+                                ${request.status === 'pending' ? `
+                                    <button class="btn-approve" onclick="approveRequest(${loginId})">✓ موافقة</button>
+                                ` : ''}
+                                <button class="btn-delete" onclick="deleteRequest(${loginId})">حذف</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            mobileRequests.innerHTML = filteredRequests.map((request, index) => {
+                const loginId = Number(request.loginId);
+                const status = escapeHtml(request.status || 'pending');
+
+                return `
+                    <div class="mobile-request-card">
+                        <div class="mobile-request-head">
+                            <span class="mobile-request-number">طلب #${index + 1}</span>
+                            <span class="status-badge status-${status.toLowerCase()}">
+                                ${getStatusText(request.status)}
+                            </span>
                         </div>
-                    </td>
-                </tr>
-            `).join('');
+                        <div class="mobile-field">
+                            <span class="mobile-label">البريد</span>
+                            <span class="mobile-value">${escapeHtml(request.email)}</span>
+                        </div>
+                        <div class="mobile-field">
+                            <span class="mobile-label">وقت الطلب</span>
+                            <span class="mobile-value">${escapeHtml(request.loginTime)}</span>
+                        </div>
+                        <div class="mobile-field">
+                            <span class="mobile-label">الإجراءات</span>
+                            <div class="action-btns">
+                                ${request.status === 'pending' ? `
+                                    <button class="btn-approve" onclick="approveRequest(${loginId})">✓ موافقة</button>
+                                ` : ''}
+                                <button class="btn-delete" onclick="deleteRequest(${loginId})">حذف</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
 
         function approveRequest(loginId) {
