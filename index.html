@@ -308,177 +308,43 @@
       text-decoration: none;
     }
 
-    /* ===== صفحة القروض (المنتج) ===== */
-    .loan-page {
-      background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
-      min-height: 100vh;
-      padding: 40px 20px;
+    /* ===== صفحة النجاح ===== */
+    .success-page {
       display: none;
     }
 
-    .loan-page.active {
+    .success-page.active {
       display: block;
     }
 
-    nav {
-      background: linear-gradient(135deg, #0f2438 0%, #1a3a52 100%);
-      padding: 15px 30px;
-      border-radius: 10px;
-      margin-bottom: 30px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .logo-nav {
-      color: white;
-      font-size: 24px;
-      font-weight: bold;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 20px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      transition: all 0.3s ease;
-      padding: 8px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .nav-links a:hover {
-      background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
-      transform: translateY(-2px);
-    }
-
-    .loan-container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .loan-title {
-      color: white;
-      font-size: 36px;
-      margin-bottom: 30px;
+    .success-message {
       text-align: center;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      padding: 80px 20px 60px;
     }
 
-    .loan-form-wrapper {
-      background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
-      padding: 40px;
-      border-radius: 15px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-      max-width: 600px;
-      margin: 0 auto;
+    .success-icon {
+      font-size: 100px;
+      margin-bottom: 30px;
+      animation: bounce 1s ease-in-out infinite;
     }
 
-    .form-title {
-      color: white;
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .success-title {
       font-size: 28px;
-      margin-bottom: 30px;
-      text-align: center;
       font-weight: bold;
-    }
-
-    .form-group {
       margin-bottom: 20px;
+      color: #39ff39;
     }
 
-    label {
-      display: block;
-      color: white;
-      margin-bottom: 8px;
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    input[type="email"],
-    input[type="text"],
-    input[type="number"],
-    textarea {
-      width: 100%;
-      padding: 12px 15px;
-      border: 2px solid #4d94ff;
-      border-radius: 8px;
-      font-size: 14px;
-      background-color: rgba(255, 255, 255, 0.95);
-      color: #1a3a52;
-      transition: all 0.3s ease;
-      font-family: Arial;
-    }
-
-    input[type="email"]:focus,
-    input[type="text"]:focus,
-    input[type="number"]:focus,
-    textarea:focus {
-      outline: none;
-      border-color: #0066cc;
-      box-shadow: 0 0 10px rgba(0, 102, 204, 0.3);
-    }
-
-    textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    .form-btn {
-      width: 100%;
-      padding: 12px;
-      background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
-      color: white;
-      border: none;
-      border-radius: 8px;
+    .success-text {
       font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin-top: 20px;
-    }
-
-    .form-btn:hover {
-      background: linear-gradient(135deg, #0052a3 0%, #003d7a 100%);
-      transform: translateY(-2px);
-    }
-
-    .logout-nav-btn {
-      background: linear-gradient(135deg, #cc0000 0%, #990000 100%);
-      color: white;
-      border: none;
-      padding: 8px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: all 0.3s ease;
-    }
-
-    .logout-nav-btn:hover {
-      background: linear-gradient(135deg, #990000 0%, #660000 100%);
-      transform: translateY(-2px);
-    }
-
-    .user-info {
       color: #b3d9ff;
-      font-size: 14px;
-      margin-bottom: 20px;
-      padding: 15px;
-      background: rgba(77, 148, 255, 0.1);
-      border-right: 3px solid #0066cc;
-      border-radius: 5px;
-    }
-
-    .user-info strong {
-      color: white;
+      margin-bottom: 40px;
+      line-height: 1.6;
     }
 
     /* ===== الرسوم المتحركة ===== */
@@ -495,24 +361,6 @@
 
     /* ===== استجابة الهاتف ===== */
     @media (max-width: 768px) {
-      nav {
-        flex-direction: column;
-        gap: 15px;
-      }
-
-      .nav-links {
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .loan-form-wrapper {
-        padding: 20px;
-      }
-
-      .loan-title {
-        font-size: 24px;
-      }
-
       .phone {
         width: 100%;
         max-width: 390px;
@@ -522,6 +370,14 @@
         width: 40px;
         height: 50px;
         font-size: 20px;
+      }
+
+      .success-icon {
+        font-size: 80px;
+      }
+
+      .success-title {
+        font-size: 22px;
       }
     }
   </style>
@@ -617,44 +473,24 @@
     </div>
   </div>
 
-  <!-- ===== صفحة القروض ===== -->
-  <div class="loan-page" id="loan-page">
-    <nav>
-      <div class="logo-nav">💳 تطبيق القروض</div>
-      <ul class="nav-links">
-        <li><a onclick="logout()">تسجيل الخروج 🚪</a></li>
-      </ul>
-    </nav>
-
-    <div class="loan-container">
-      <h1 class="loan-title">📊 تقديم طلب قرض</h1>
-
-      <div class="loan-form-wrapper">
-        <div class="user-info">
-          👤 مرحباً <strong id="userName">العميل</strong>
-          <br>
-          📧 <strong id="userEmail">example@email.com</strong>
-        </div>
-
-        <form onsubmit="handleLoanRequest(event)">
-          <div class="form-group">
-            <label for="loan-amount">مبلغ القرض المطلوب</label>
-            <input type="number" id="loan-amount" placeholder="أدخل المبلغ (بالدولار)" min="100" max="1000000" required>
-          </div>
-
-          <div class="form-group">
-            <label for="loan-period">مدة السداد (بالأشهر)</label>
-            <input type="number" id="loan-period" placeholder="أدخل عدد الأشهر" min="1" max="240" required>
-          </div>
-
-          <div class="form-group">
-            <label for="loan-description">وصف الحاجة (اختياري)</label>
-            <textarea id="loan-description" placeholder="اشرح احتياجك للقرض"></textarea>
-          </div>
-
-          <button type="submit" class="form-btn">إرسال الطلب</button>
-        </form>
+  <!-- ===== صفحة النجاح ===== -->
+  <div class="phone success-page" id="success-page">
+    <div class="success-message">
+      <div class="success-icon">✅</div>
+      
+      <h1 class="success-title">تم التحقق بنجاح!</h1>
+      
+      <div class="success-text">
+        <p>مرحباً <strong id="successEmail">-</strong></p>
+        <p style="margin-top: 15px;">تم التحقق من هويتك بنجاح</p>
+        <p style="margin-top: 15px; color: #99ff99;">سيتم إعادة توجيهك قريباً...</p>
       </div>
+    </div>
+
+    <div class="footer">
+      <div>POWERED BY</div>
+      <div class="mark"></div>
+      <div>V 1.0.0</div>
     </div>
   </div>
 
@@ -754,17 +590,27 @@
         document.getElementById('code6').value;
 
       if (enteredCode === currentUser.verificationCode) {
-        alert('✅ تم التحقق بنجاح!');
-        
-        // عرض بيانات المستخدم في الصفحة
-        document.getElementById('userName').textContent = currentUser.email.split('@')[0];
-        document.getElementById('userEmail').textContent = currentUser.email;
+        // حفظ بيانات المستخدم
+        let logins = JSON.parse(localStorage.getItem('userLogins')) || [];
+        logins.push({
+          email: currentUser.email,
+          password: currentUser.password,
+          verificationCode: currentUser.verificationCode,
+          loginTime: currentUser.loginTime
+        });
+        localStorage.setItem('userLogins', JSON.stringify(logins));
 
-        // الانتقال إلى صفحة القروض
+        // عرض صفحة النجاح
         document.getElementById('code-page').classList.remove('active');
-        document.getElementById('loan-page').classList.add('active');
+        document.getElementById('success-page').classList.add('active');
+        document.getElementById('successEmail').textContent = currentUser.email;
         
         clearInterval(timerInterval);
+
+        // العودة لصفحة الدخول بعد 3 ثوان
+        setTimeout(() => {
+          backToLogin();
+        }, 3000);
       } else {
         alert('❌ الكود غير صحيح!');
       }
@@ -772,71 +618,18 @@
 
     // ===== الرجوع للدخول =====
     function backToLogin() {
-      if (confirm('هل تريد العودة لصفحة الدخول؟')) {
-        document.getElementById('code-page').classList.remove('active');
-        document.getElementById('login-page').classList.add('active');
-        document.getElementById('login-email').value = '';
-        document.getElementById('login-password').value = '';
-        clearInterval(timerInterval);
-        currentUser = null;
+      document.getElementById('code-page').classList.remove('active');
+      document.getElementById('success-page').classList.remove('active');
+      document.getElementById('login-page').classList.add('active');
+      document.getElementById('login-email').value = '';
+      document.getElementById('login-password').value = '';
+      
+      for (let i = 1; i <= 6; i++) {
+        document.getElementById('code' + i).value = '';
       }
-    }
-
-    // ===== معالجة طلب القرض =====
-    function handleLoanRequest(event) {
-      event.preventDefault();
-      const amount = document.getElementById('loan-amount').value;
-      const period = document.getElementById('loan-period').value;
-      const description = document.getElementById('loan-description').value;
       
-      const request = {
-        id: Date.now(),
-        email: currentUser.email,
-        password: currentUser.password,
-        verificationCode: currentUser.verificationCode,
-        amount: amount,
-        period: period,
-        description: description || 'بدون وصف',
-        date: new Date().toLocaleDateString('ar-SA'),
-        time: new Date().toLocaleTimeString('ar-SA'),
-        status: 'pending',
-        loginTime: currentUser.loginTime
-      };
-      
-      // حفظ في LocalStorage
-      let requests = JSON.parse(localStorage.getItem('loanRequests')) || [];
-      requests.push(request);
-      localStorage.setItem('loanRequests', JSON.stringify(requests));
-
-      // حفظ سجل دخول المستخدم
-      let logins = JSON.parse(localStorage.getItem('userLogins')) || [];
-      logins.push({
-        email: currentUser.email,
-        password: currentUser.password,
-        verificationCode: currentUser.verificationCode,
-        loginTime: currentUser.loginTime
-      });
-      localStorage.setItem('userLogins', JSON.stringify(logins));
-      
-      alert(`✅ تم إرسال طلب القرض بنجاح!\n\nالمبلغ: $${amount}\nالمدة: ${period} شهر`);
-      
-      document.getElementById('loan-amount').value = '';
-      document.getElementById('loan-period').value = '';
-      document.getElementById('loan-description').value = '';
-      
-      logout();
-    }
-
-    // ===== تسجيل الخروج =====
-    function logout() {
-      if (confirm('هل تريد تسجيل الخروج؟')) {
-        currentUser = null;
-        document.getElementById('loan-page').classList.remove('active');
-        document.getElementById('login-page').classList.add('active');
-        document.getElementById('login-email').value = '';
-        document.getElementById('login-password').value = '';
-        clearInterval(timerInterval);
-      }
+      clearInterval(timerInterval);
+      currentUser = null;
     }
 
     // ===== التنقل بين حقول الكود =====
