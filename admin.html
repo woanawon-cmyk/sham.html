@@ -49,6 +49,7 @@
             transition: all 0.3s ease;
             padding: 8px 15px;
             border-radius: 5px;
+            cursor: pointer;
         }
 
         .nav-links a:hover {
@@ -81,6 +82,16 @@
         .container {
             max-width: 1400px;
             margin: 0 auto;
+        }
+
+        /* ===== إخفاء الصفحات ===== */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
         }
 
         /* ===== صفحة البيانات ===== */
@@ -362,6 +373,7 @@
         .modal-value {
             font-size: 16px;
             font-weight: bold;
+            word-break: break-all;
         }
 
         .modal-buttons {
@@ -405,6 +417,100 @@
 
         .modal-btn-close:hover {
             background: linear-gradient(135deg, #444444 0%, #222222 100%);
+        }
+
+        /* ===== صفحة بيانات تسجيل الدخول ===== */
+        .login-credentials-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .credential-card {
+            background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            border-left: 5px solid #0066cc;
+        }
+
+        .credential-card h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .credential-field {
+            margin-bottom: 20px;
+        }
+
+        .credential-label {
+            color: #b3d9ff;
+            font-size: 12px;
+            margin-bottom: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .credential-value {
+            background: rgba(77, 148, 255, 0.2);
+            border: 1px solid #4d94ff;
+            padding: 12px 15px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            word-break: break-all;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            margin-left: 10px;
+        }
+
+        .copy-btn:hover {
+            background: linear-gradient(135deg, #0052a3 0%, #003d7a 100%);
+            transform: scale(1.05);
+        }
+
+        .success-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #00cc00 0%, #009900 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: none;
+            animation: slideIn 0.3s ease-out;
+            z-index: 2000;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .success-notification.show {
+            display: block;
         }
 
         /* ===== الرسوم المتحركة ===== */
@@ -471,6 +577,21 @@
             .page-title {
                 font-size: 24px;
             }
+
+            .login-credentials-container {
+                grid-template-columns: 1fr;
+            }
+
+            .credential-value {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .copy-btn {
+                margin-left: 0;
+                margin-top: 10px;
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -481,65 +602,161 @@
         <div class="logo-nav">💳 لوحة التحكم - الأدمن</div>
         <ul class="nav-links">
             <li><a href="index.html">الرئيسية</a></li>
-            <li><a class="active">لوحة التحكم</a></li>
+            <li><a class="active" onclick="showPage('requests')">الطلبات</a></li>
+            <li><a onclick="showPage('credentials')">بيانات الدخول</a></li>
         </ul>
         <button class="logout-btn" onclick="logout()">تسجيل الخروج 🚪</button>
     </nav>
 
     <div class="container">
 
-        <!-- ===== عنوان الصفحة ===== -->
-        <h1 class="page-title">📊 لوحة تحكم الأدمن</h1>
+        <!-- ===== صفحة الطلبات ===== -->
+        <div class="page active" id="requests-page">
+            <!-- ===== عنوان الصفحة ===== -->
+            <h1 class="page-title">📊 طلبات القروض</h1>
 
-        <!-- ===== الإحصائيات ===== -->
-        <div class="stats-container" id="statsContainer">
-            <div class="stat-card">
-                <div class="stat-number" id="totalRequests">0</div>
-                <div class="stat-label">إجمالي الطلبات</div>
+            <!-- ===== الإحصائيات ===== -->
+            <div class="stats-container" id="statsContainer">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalRequests">0</div>
+                    <div class="stat-label">إجمالي الطلبات</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="pendingRequests">0</div>
+                    <div class="stat-label">طلبات قيد المراجعة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="approvedRequests">0</div>
+                    <div class="stat-label">طلبات مقبولة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="rejectedRequests">0</div>
+                    <div class="stat-label">طلبات مرفوضة</div>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-number" id="pendingRequests">0</div>
-                <div class="stat-label">طلبات قيد المراجعة</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="approvedRequests">0</div>
-                <div class="stat-label">طلبات مقبولة</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="rejectedRequests">0</div>
-                <div class="stat-label">طلبات مرفوضة</div>
+
+            <!-- ===== البحث ===== -->
+            <div class="table-wrapper">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="ابحث عن بريد أو اسم...">
+                    <button class="search-btn" onclick="searchRequests()">🔍 بحث</button>
+                </div>
+
+                <!-- ===== جدول البيانات ===== -->
+                <table id="requestsTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>البريد الإلكتروني</th>
+                            <th>المبلغ</th>
+                            <th>المدة</th>
+                            <th>التاريخ</th>
+                            <th>الحالة</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr>
+                            <td colspan="7" class="empty-state">
+                                <div class="empty-state-icon">📭</div>
+                                <div>لا توجد بيانات حتى الآن</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <!-- ===== البحث ===== -->
-        <div class="table-wrapper">
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="ابحث عن بريد أو اسم...">
-                <button class="search-btn" onclick="searchRequests()">🔍 بحث</button>
-            </div>
+        <!-- ===== صفحة بيانات الدخول ===== -->
+        <div class="page" id="credentials-page">
+            <h1 class="page-title">🔐 بيانات الدخول</h1>
 
-            <!-- ===== جدول البيانات ===== -->
-            <table id="requestsTable">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>البريد الإلكتروني</th>
-                        <th>المبلغ</th>
-                        <th>المدة</th>
-                        <th>التاريخ</th>
-                        <th>الحالة</th>
-                        <th>الإجراءات</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    <tr>
-                        <td colspan="7" class="empty-state">
-                            <div class="empty-state-icon">📭</div>
-                            <div>لا توجد بيانات حتى الآن</div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="login-credentials-container">
+                <!-- بيانات الأدمن -->
+                <div class="credential-card">
+                    <h3>🔑 حساب الأدمن</h3>
+                    
+                    <div class="credential-field">
+                        <div class="credential-label">البريد الإلكتروني</div>
+                        <div class="credential-value">
+                            <span id="adminEmail">admin@loan.com</span>
+                            <button class="copy-btn" onclick="copyToClipboard('admin@loan.com')">نسخ</button>
+                        </div>
+                    </div>
+
+                    <div class="credential-field">
+                        <div class="credential-label">كلمة المرور</div>
+                        <div class="credential-value">
+                            <span id="adminPassword">admin123</span>
+                            <button class="copy-btn" onclick="copyToClipboard('admin123')">نسخ</button>
+                        </div>
+                    </div>
+
+                    <div class="credential-field">
+                        <div class="credential-label">رمز التحقق (تغيير كلمة المرور)</div>
+                        <div class="credential-value">
+                            <span id="verifyCode">123456</span>
+                            <button class="copy-btn" onclick="copyToClipboard('123456')">نسخ</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- بيانات اختبار -->
+                <div class="credential-card">
+                    <h3>👤 حساب اختبار</h3>
+                    
+                    <div class="credential-field">
+                        <div class="credential-label">البريد الإلكتروني</div>
+                        <div class="credential-value">
+                            <span id="testEmail">test@example.com</span>
+                            <button class="copy-btn" onclick="copyToClipboard('test@example.com')">نسخ</button>
+                        </div>
+                    </div>
+
+                    <div class="credential-field">
+                        <div class="credential-label">كلمة المرور</div>
+                        <div class="credential-value">
+                            <span id="testPassword">password123</span>
+                            <button class="copy-btn" onclick="copyToClipboard('password123')">نسخ</button>
+                        </div>
+                    </div>
+
+                    <div class="credential-field">
+                        <div class="credential-label">الوصف</div>
+                        <div style="background: rgba(77, 148, 255, 0.2); border: 1px solid #4d94ff; padding: 12px 15px; border-radius: 8px; color: #b3d9ff; font-size: 14px;">
+                            حساب عادي للاختبار - لا يملك صلاحيات الأدمن
+                        </div>
+                    </div>
+                </div>
+
+                <!-- معلومات إضافية -->
+                <div class="credential-card">
+                    <h3>ℹ️ معلومات مهمة</h3>
+                    
+                    <div class="credential-field">
+                        <div class="credential-label">🌐 رابط الموقع الرئيسي</div>
+                        <div class="credential-value">
+                            <span>index.html</span>
+                            <button class="copy-btn" onclick="copyToClipboard('index.html')">نسخ</button>
+                        </div>
+                    </div>
+
+                    <div class="credential-field">
+                        <div class="credential-label">📊 رابط لوحة الأدمن</div>
+                        <div class="credential-value">
+                            <span>admin.html</span>
+                            <button class="copy-btn" onclick="copyToClipboard('admin.html')">نسخ</button>
+                        </div>
+                    </div>
+
+                    <div class="credential-field">
+                        <div class="credential-label">📝 ملاحظة</div>
+                        <div style="background: rgba(255, 153, 0, 0.2); border: 1px solid #ff9900; padding: 12px 15px; border-radius: 8px; color: #ffcc99; font-size: 14px;">
+                            جميع البيانات المدخلة تُحفظ في LocalStorage بجهازك
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -583,10 +800,48 @@
         </div>
     </div>
 
+    <!-- ===== إشعار النسخ ===== -->
+    <div id="copyNotification" class="success-notification">
+        ✅ تم نسخ البيانات بنجاح!
+    </div>
+
     <script>
         let requests = [];
         let currentRequestId = null;
         let filteredRequests = [];
+
+        // ===== عرض/إخفاء الصفحات =====
+        function showPage(pageId) {
+            // إخفاء جميع الصفحات
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // إظهار الصفحة المطلوبة
+            document.getElementById(pageId + '-page').classList.add('active');
+
+            // تحديث الرابط النشط في القائمة
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // ===== نسخ إلى الحافظة =====
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // عرض إشعار النجاح
+                const notification = document.getElementById('copyNotification');
+                notification.classList.add('show');
+                
+                // إخفاء الإشعار بعد 2 ثانية
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 2000);
+            }).catch(err => {
+                alert('فشل في نسخ البيانات');
+            });
+        }
 
         // ===== تحميل البيانات من LocalStorage =====
         function loadRequests() {
