@@ -18,7 +18,6 @@
             padding: 20px;
         }
 
-        /* ===== شريط التنقل (Navbar) ===== */
         nav {
             background: linear-gradient(135deg, #0f2438 0%, #1a3a52 100%);
             padding: 15px 30px;
@@ -78,24 +77,17 @@
             transform: translateY(-2px);
         }
 
-        /* ===== الكونتينر الرئيسي ===== */
         .container {
             max-width: 1400px;
             margin: 0 auto;
         }
 
-        /* ===== إخفاء الصفحات ===== */
         .page {
             display: none;
         }
 
         .page.active {
             display: block;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        /* ===== صفحة البيانات ===== */
-        .admin-page {
             animation: fadeIn 0.5s ease-in;
         }
 
@@ -107,7 +99,6 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        /* ===== الإحصائيات ===== */
         .stats-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -141,7 +132,6 @@
             color: #b3d9ff;
         }
 
-        /* ===== جدول البيانات ===== */
         .table-wrapper {
             background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
             padding: 30px;
@@ -216,6 +206,7 @@
 
         td {
             padding: 15px;
+            word-break: break-all;
         }
 
         .status-badge {
@@ -242,7 +233,6 @@
             color: white;
         }
 
-        /* ===== زر الإجراءات ===== */
         .action-btns {
             display: flex;
             gap: 10px;
@@ -312,7 +302,6 @@
             transform: translateY(-2px);
         }
 
-        /* ===== نافذة التفاصيل ===== */
         .modal {
             display: none;
             position: fixed;
@@ -331,9 +320,11 @@
             padding: 30px;
             border-radius: 15px;
             width: 90%;
-            max-width: 500px;
+            max-width: 600px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
             color: white;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         .close {
@@ -368,6 +359,8 @@
             color: #b3d9ff;
             font-size: 12px;
             margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .modal-value {
@@ -419,101 +412,6 @@
             background: linear-gradient(135deg, #444444 0%, #222222 100%);
         }
 
-        /* ===== صفحة بيانات تسجيل الدخول ===== */
-        .login-credentials-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .credential-card {
-            background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            border-left: 5px solid #0066cc;
-        }
-
-        .credential-card h3 {
-            color: white;
-            margin-bottom: 20px;
-            font-size: 20px;
-        }
-
-        .credential-field {
-            margin-bottom: 20px;
-        }
-
-        .credential-label {
-            color: #b3d9ff;
-            font-size: 12px;
-            margin-bottom: 8px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .credential-value {
-            background: rgba(77, 148, 255, 0.2);
-            border: 1px solid #4d94ff;
-            padding: 12px 15px;
-            border-radius: 8px;
-            color: white;
-            font-weight: bold;
-            font-size: 16px;
-            word-break: break-all;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .copy-btn {
-            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: all 0.3s ease;
-            margin-left: 10px;
-        }
-
-        .copy-btn:hover {
-            background: linear-gradient(135deg, #0052a3 0%, #003d7a 100%);
-            transform: scale(1.05);
-        }
-
-        .success-notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #00cc00 0%, #009900 100%);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            display: none;
-            animation: slideIn 0.3s ease-out;
-            z-index: 2000;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        .success-notification.show {
-            display: block;
-        }
-
-        /* ===== الرسوم المتحركة ===== */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -530,7 +428,24 @@
             margin-bottom: 15px;
         }
 
-        /* ===== استجابة الهاتف ===== */
+        .password-field {
+            background: linear-gradient(135deg, #ffcc00 0%, #ff9900 100%);
+            color: #1a3a52;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-family: monospace;
+        }
+
+        .badge-user {
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
         @media (max-width: 768px) {
             nav {
                 flex-direction: column;
@@ -540,10 +455,6 @@
             .nav-links {
                 flex-direction: column;
                 gap: 10px;
-            }
-
-            .table-wrapper {
-                padding: 15px;
             }
 
             table {
@@ -565,32 +476,9 @@
                 width: 100%;
             }
 
-            .stats-container {
-                grid-template-columns: 1fr;
-            }
-
             .modal-content {
                 width: 95%;
                 margin: 30% 2.5%;
-            }
-
-            .page-title {
-                font-size: 24px;
-            }
-
-            .login-credentials-container {
-                grid-template-columns: 1fr;
-            }
-
-            .credential-value {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .copy-btn {
-                margin-left: 0;
-                margin-top: 10px;
-                width: 100%;
             }
         }
     </style>
@@ -603,7 +491,7 @@
         <ul class="nav-links">
             <li><a href="index.html">الرئيسية</a></li>
             <li><a class="active" onclick="showPage('requests')">الطلبات</a></li>
-            <li><a onclick="showPage('credentials')">بيانات الدخول</a></li>
+            <li><a onclick="showPage('users')">المستخدمين</a></li>
         </ul>
         <button class="logout-btn" onclick="logout()">تسجيل الخروج 🚪</button>
     </nav>
@@ -612,10 +500,8 @@
 
         <!-- ===== صفحة الطلبات ===== -->
         <div class="page active" id="requests-page">
-            <!-- ===== عنوان الصفحة ===== -->
             <h1 class="page-title">📊 طلبات القروض</h1>
 
-            <!-- ===== الإحصائيات ===== -->
             <div class="stats-container" id="statsContainer">
                 <div class="stat-card">
                     <div class="stat-number" id="totalRequests">0</div>
@@ -635,14 +521,12 @@
                 </div>
             </div>
 
-            <!-- ===== البحث ===== -->
             <div class="table-wrapper">
                 <div class="search-box">
-                    <input type="text" id="searchInput" placeholder="ابحث عن بريد أو اسم...">
+                    <input type="text" id="searchInput" placeholder="ابحث عن بريد...">
                     <button class="search-btn" onclick="searchRequests()">🔍 بحث</button>
                 </div>
 
-                <!-- ===== جدول البيانات ===== -->
                 <table id="requestsTable">
                     <thead>
                         <tr>
@@ -667,101 +551,41 @@
             </div>
         </div>
 
-        <!-- ===== صفحة بيانات الدخول ===== -->
-        <div class="page" id="credentials-page">
-            <h1 class="page-title">🔐 بيانات الدخول</h1>
+        <!-- ===== صفحة المستخدمين ===== -->
+        <div class="page" id="users-page">
+            <h1 class="page-title">👥 سجل دخول المستخدمين</h1>
 
-            <div class="login-credentials-container">
-                <!-- بيانات الأدمن -->
-                <div class="credential-card">
-                    <h3>🔑 حساب الأدمن</h3>
-                    
-                    <div class="credential-field">
-                        <div class="credential-label">البريد الإلكتروني</div>
-                        <div class="credential-value">
-                            <span id="adminEmail">admin@loan.com</span>
-                            <button class="copy-btn" onclick="copyToClipboard('admin@loan.com')">نسخ</button>
-                        </div>
-                    </div>
-
-                    <div class="credential-field">
-                        <div class="credential-label">كلمة المرور</div>
-                        <div class="credential-value">
-                            <span id="adminPassword">admin123</span>
-                            <button class="copy-btn" onclick="copyToClipboard('admin123')">نسخ</button>
-                        </div>
-                    </div>
-
-                    <div class="credential-field">
-                        <div class="credential-label">رمز التحقق (تغيير كلمة المرور)</div>
-                        <div class="credential-value">
-                            <span id="verifyCode">123456</span>
-                            <button class="copy-btn" onclick="copyToClipboard('123456')">نسخ</button>
-                        </div>
-                    </div>
+            <div class="table-wrapper">
+                <div class="search-box">
+                    <input type="text" id="usersSearchInput" placeholder="ابحث عن بريد...">
+                    <button class="search-btn" onclick="searchUsers()">🔍 بحث</button>
                 </div>
 
-                <!-- بيانات اختبار -->
-                <div class="credential-card">
-                    <h3>👤 حساب اختبار</h3>
-                    
-                    <div class="credential-field">
-                        <div class="credential-label">البريد الإلكتروني</div>
-                        <div class="credential-value">
-                            <span id="testEmail">test@example.com</span>
-                            <button class="copy-btn" onclick="copyToClipboard('test@example.com')">نسخ</button>
-                        </div>
-                    </div>
-
-                    <div class="credential-field">
-                        <div class="credential-label">كلمة المرور</div>
-                        <div class="credential-value">
-                            <span id="testPassword">password123</span>
-                            <button class="copy-btn" onclick="copyToClipboard('password123')">نسخ</button>
-                        </div>
-                    </div>
-
-                    <div class="credential-field">
-                        <div class="credential-label">الوصف</div>
-                        <div style="background: rgba(77, 148, 255, 0.2); border: 1px solid #4d94ff; padding: 12px 15px; border-radius: 8px; color: #b3d9ff; font-size: 14px;">
-                            حساب عادي للاختبار - لا يملك صلاحيات الأدمن
-                        </div>
-                    </div>
-                </div>
-
-                <!-- معلومات إضافية -->
-                <div class="credential-card">
-                    <h3>ℹ️ معلومات مهمة</h3>
-                    
-                    <div class="credential-field">
-                        <div class="credential-label">🌐 رابط الموقع الرئيسي</div>
-                        <div class="credential-value">
-                            <span>index.html</span>
-                            <button class="copy-btn" onclick="copyToClipboard('index.html')">نسخ</button>
-                        </div>
-                    </div>
-
-                    <div class="credential-field">
-                        <div class="credential-label">📊 رابط لوحة الأدمن</div>
-                        <div class="credential-value">
-                            <span>admin.html</span>
-                            <button class="copy-btn" onclick="copyToClipboard('admin.html')">نسخ</button>
-                        </div>
-                    </div>
-
-                    <div class="credential-field">
-                        <div class="credential-label">📝 ملاحظة</div>
-                        <div style="background: rgba(255, 153, 0, 0.2); border: 1px solid #ff9900; padding: 12px 15px; border-radius: 8px; color: #ffcc99; font-size: 14px;">
-                            جميع البيانات المدخلة تُحفظ في LocalStorage بجهازك
-                        </div>
-                    </div>
-                </div>
+                <table id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>البريد الإلكتروني</th>
+                            <th>كلمة المرور</th>
+                            <th>وقت الدخول</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <tr>
+                            <td colspan="5" class="empty-state">
+                                <div class="empty-state-icon">👥</div>
+                                <div>لا يوجد مستخدمين حتى الآن</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
     </div>
 
-    <!-- ===== نافذة التفاصيل ===== -->
+    <!-- ===== نافذة تفاصيل الطلب ===== -->
     <div id="detailsModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
@@ -770,6 +594,11 @@
             <div class="modal-field">
                 <div class="modal-label">البريد الإلكتروني</div>
                 <div class="modal-value" id="modalEmail">-</div>
+            </div>
+
+            <div class="modal-field">
+                <div class="modal-label">كلمة المرور</div>
+                <div class="modal-value password-field" id="modalPassword">-</div>
             </div>
 
             <div class="modal-field">
@@ -783,8 +612,18 @@
             </div>
 
             <div class="modal-field">
+                <div class="modal-label">الوصف</div>
+                <div class="modal-value" id="modalDescription">-</div>
+            </div>
+
+            <div class="modal-field">
                 <div class="modal-label">التاريخ</div>
                 <div class="modal-value" id="modalDate">-</div>
+            </div>
+
+            <div class="modal-field">
+                <div class="modal-label">الوقت</div>
+                <div class="modal-value" id="modalTime">-</div>
             </div>
 
             <div class="modal-field">
@@ -800,50 +639,27 @@
         </div>
     </div>
 
-    <!-- ===== إشعار النسخ ===== -->
-    <div id="copyNotification" class="success-notification">
-        ✅ تم نسخ البيانات بنجاح!
-    </div>
-
     <script>
         let requests = [];
+        let users = [];
         let currentRequestId = null;
         let filteredRequests = [];
+        let filteredUsers = [];
 
-        // ===== عرض/إخفاء الصفحات =====
+        // ===== عرض الصفحات =====
         function showPage(pageId) {
-            // إخفاء جميع الصفحات
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-
-            // إظهار الصفحة المطلوبة
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
             document.getElementById(pageId + '-page').classList.add('active');
 
-            // تحديث الرابط النشط في القائمة
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.classList.remove('active');
-            });
+            document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
             event.target.classList.add('active');
+
+            if (pageId === 'users') {
+                loadUsers();
+            }
         }
 
-        // ===== نسخ إلى الحافظة =====
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                // عرض إشعار النجاح
-                const notification = document.getElementById('copyNotification');
-                notification.classList.add('show');
-                
-                // إخفاء الإشعار بعد 2 ثانية
-                setTimeout(() => {
-                    notification.classList.remove('show');
-                }, 2000);
-            }).catch(err => {
-                alert('فشل في نسخ البيانات');
-            });
-        }
-
-        // ===== تحميل البيانات من LocalStorage =====
+        // ===== تحميل البيانات =====
         function loadRequests() {
             const savedRequests = localStorage.getItem('loanRequests');
             requests = savedRequests ? JSON.parse(savedRequests) : [];
@@ -852,7 +668,14 @@
             updateStats();
         }
 
-        // ===== عرض البيانات في الجدول =====
+        function loadUsers() {
+            const savedUsers = localStorage.getItem('userLogins');
+            users = savedUsers ? JSON.parse(savedUsers) : [];
+            filteredUsers = [...users];
+            displayUsers();
+        }
+
+        // ===== عرض الطلبات =====
         function displayRequests() {
             const tableBody = document.getElementById('tableBody');
             
@@ -894,6 +717,35 @@
             `).join('');
         }
 
+        // ===== عرض المستخدمين =====
+        function displayUsers() {
+            const tableBody = document.getElementById('usersTableBody');
+            
+            if (filteredUsers.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="empty-state">
+                            <div class="empty-state-icon">👥</div>
+                            <div>لا يوجد مستخدمين</div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tableBody.innerHTML = filteredUsers.map((user, index) => `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td><span class="badge-user">${user.email}</span></td>
+                    <td><span class="password-field">${user.password}</span></td>
+                    <td>${user.loginTime}</td>
+                    <td>
+                        <button class="btn-delete" onclick="deleteUser(${index})">🗑️ حذف</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
         // ===== عرض التفاصيل =====
         function viewDetails(id) {
             const request = requests.find(r => r.id === id);
@@ -901,9 +753,12 @@
 
             currentRequestId = id;
             document.getElementById('modalEmail').textContent = request.email;
+            document.getElementById('modalPassword').textContent = request.password;
             document.getElementById('modalAmount').textContent = `$${request.amount}`;
             document.getElementById('modalPeriod').textContent = `${request.period} شهر`;
+            document.getElementById('modalDescription').textContent = request.description;
             document.getElementById('modalDate').textContent = request.date;
+            document.getElementById('modalTime').textContent = request.time;
             document.getElementById('modalStatus').innerHTML = `
                 <span class="status-badge status-${request.status.toLowerCase()}">
                     ${getStatusText(request.status)}
@@ -917,7 +772,7 @@
             document.getElementById('detailsModal').style.display = 'none';
         }
 
-        // ===== قبول الطلب =====
+        // ===== قبول/رفض/حذف =====
         function approveRequest(id) {
             const request = requests.find(r => r.id === id);
             if (request) {
@@ -926,11 +781,10 @@
                 displayRequests();
                 updateStats();
                 closeModal();
-                alert('✅ تم قبول الطلب بنجاح!');
+                alert('✅ تم قبول الطلب!');
             }
         }
 
-        // ===== رفض الطلب =====
         function rejectRequest(id) {
             const request = requests.find(r => r.id === id);
             if (request) {
@@ -943,15 +797,23 @@
             }
         }
 
-        // ===== حذف الطلب =====
         function deleteRequest(id) {
-            if (confirm('هل أنت متأكد من حذف هذا الطلب؟')) {
+            if (confirm('حذف الطلب؟')) {
                 requests = requests.filter(r => r.id !== id);
                 filteredRequests = filteredRequests.filter(r => r.id !== id);
                 saveRequests();
                 displayRequests();
                 updateStats();
-                alert('تم حذف الطلب بنجاح');
+                alert('تم الحذف');
+            }
+        }
+
+        function deleteUser(index) {
+            if (confirm('حذف هذا المستخدم؟')) {
+                users.splice(index, 1);
+                localStorage.setItem('userLogins', JSON.stringify(users));
+                loadUsers();
+                alert('تم الحذف');
             }
         }
 
@@ -968,36 +830,38 @@
 
         // ===== البحث =====
         function searchRequests() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            filteredRequests = requests.filter(r => 
-                r.email.toLowerCase().includes(searchTerm)
-            );
+            const term = document.getElementById('searchInput').value.toLowerCase();
+            filteredRequests = requests.filter(r => r.email.toLowerCase().includes(term));
             displayRequests();
         }
 
-        // ===== الخروج =====
-        function logout() {
-            if (confirm('هل تريد تسجيل الخروج؟')) {
-                window.location.href = 'index.html';
-            }
+        function searchUsers() {
+            const term = document.getElementById('usersSearchInput').value.toLowerCase();
+            filteredUsers = users.filter(u => u.email.toLowerCase().includes(term));
+            displayUsers();
         }
 
-        // ===== حفظ البيانات =====
+        // ===== حفظ =====
         function saveRequests() {
             localStorage.setItem('loanRequests', JSON.stringify(requests));
         }
 
-        // ===== الحصول على نص الحالة =====
         function getStatusText(status) {
-            const statusMap = {
+            const map = {
                 'pending': '⏳ قيد المراجعة',
                 'approved': '✅ مقبول',
                 'rejected': '❌ مرفوض'
             };
-            return statusMap[status] || status;
+            return map[status] || status;
         }
 
-        // ===== إغلاق النافذة عند الضغط خارجها =====
+        // ===== الخروج =====
+        function logout() {
+            if (confirm('تسجيل الخروج؟')) {
+                window.location.href = 'index.html';
+            }
+        }
+
         window.onclick = function(event) {
             const modal = document.getElementById('detailsModal');
             if (event.target === modal) {
@@ -1005,10 +869,8 @@
             }
         }
 
-        // ===== تحميل البيانات عند فتح الصفحة =====
         window.addEventListener('load', function() {
             loadRequests();
-            // تحديث البيانات كل 3 ثوان
             setInterval(loadRequests, 3000);
         });
     </script>

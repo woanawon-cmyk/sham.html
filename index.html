@@ -18,13 +18,6 @@
       padding:20px;
     }
 
-    /* ===== الحاوية الرئيسية ===== */
-    .container {
-      width: 100%;
-      max-width: 1200px;
-    }
-
-    /* ===== صفحة الهاتف (تسجيل الدخول) ===== */
     .phone{
       width:390px;
       min-height:780px;
@@ -222,70 +215,16 @@
       opacity:.8;
     }
 
-    /* ===== صفحة تغيير كلمة المرور ===== */
-    .forgot-password-page{
-      display: none;
-    }
-
-    .forgot-password-page.active {
-      display: block;
-    }
-
-    .back {
-      font-size: 42px;
-      line-height: 1;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .back:hover {
-      transform: scale(1.2);
-      color: #3fa0ff;
-    }
-
-    .subtitle {
-      text-align: right;
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 24px;
-      color: #f2f6ff;
-    }
-
-    .success-message {
-      background: linear-gradient(135deg, #00cc00 0%, #009900 100%);
-      padding: 15px;
-      border-radius: 10px;
-      text-align: center;
-      margin-bottom: 20px;
-      font-weight: bold;
-      animation: slideDown 0.5s ease-out;
-    }
-
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* ===== الصفحات الأخرى ===== */
-    .page {
-      display: none;
-    }
-
-    .page.active {
-      display: block;
-      animation: slideUp 0.6s ease-out;
-    }
-
-    .home-page, .loan-page, .signup-page {
+    /* ===== صفحة القروض (المنتج) ===== */
+    .loan-page {
       background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
       min-height: 100vh;
       padding: 40px 20px;
+      display: none;
+    }
+
+    .loan-page.active {
+      display: block;
     }
 
     nav {
@@ -329,74 +268,26 @@
       transform: translateY(-2px);
     }
 
-    .hero {
-      text-align: center;
-      padding: 80px 20px;
-      color: white;
-    }
-
-    .hero h1 {
-      font-size: 48px;
-      margin-bottom: 20px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    }
-
-    .hero p {
-      font-size: 18px;
-      margin-bottom: 40px;
-      color: #b3d9ff;
-    }
-
-    .button-group {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      flex-wrap: wrap;
+    .loan-container {
       max-width: 1200px;
       margin: 0 auto;
     }
 
-    .btn {
-      padding: 15px 40px;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-weight: bold;
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+    .loan-title {
       color: white;
+      font-size: 36px;
+      margin-bottom: 30px;
+      text-align: center;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     }
 
-    .btn-primary:hover {
-      background: linear-gradient(135deg, #0052a3 0%, #003d7a 100%);
-      transform: translateY(-3px);
-      box-shadow: 0 10px 25px rgba(0, 102, 204, 0.4);
-    }
-
-    .btn-secondary {
-      background: linear-gradient(135deg, #4d94ff 0%, #0066cc 100%);
-      color: white;
-    }
-
-    .btn-secondary:hover {
-      background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
-      transform: translateY(-3px);
-    }
-
-    /* ===== نموذج تقديم الطلب ===== */
-    .form-container {
-      max-width: 500px;
-      margin: 50px auto;
+    .loan-form-wrapper {
       background: linear-gradient(135deg, #1a3a52 0%, #2d5a7b 100%);
       padding: 40px;
       border-radius: 15px;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+      margin: 0 auto;
     }
 
     .form-title {
@@ -421,8 +312,7 @@
 
     input[type="email"],
     input[type="text"],
-    input[type="number"],
-    input[type="password"] {
+    input[type="number"] {
       width: 100%;
       padding: 12px 15px;
       border: 2px solid #4d94ff;
@@ -435,8 +325,7 @@
 
     input[type="email"]:focus,
     input[type="text"]:focus,
-    input[type="number"]:focus,
-    input[type="password"]:focus {
+    input[type="number"]:focus {
       outline: none;
       border-color: #0066cc;
       box-shadow: 0 0 10px rgba(0, 102, 204, 0.3);
@@ -461,52 +350,34 @@
       transform: translateY(-2px);
     }
 
-    .back-btn {
-      width: 100%;
-      padding: 10px;
-      background: linear-gradient(135deg, #4d94ff 0%, #0066cc 100%);
+    .logout-nav-btn {
+      background: linear-gradient(135deg, #cc0000 0%, #990000 100%);
       color: white;
       border: none;
-      border-radius: 8px;
-      font-size: 14px;
+      padding: 8px 15px;
+      border-radius: 5px;
       cursor: pointer;
-      margin-top: 15px;
+      font-weight: bold;
       transition: all 0.3s ease;
     }
 
-    .back-btn:hover {
-      background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+    .logout-nav-btn:hover {
+      background: linear-gradient(135deg, #990000 0%, #660000 100%);
+      transform: translateY(-2px);
     }
 
-    .signup-link {
-      text-align: center;
-      margin-top: 20px;
+    .user-info {
       color: #b3d9ff;
       font-size: 14px;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: rgba(77, 148, 255, 0.1);
+      border-right: 3px solid #0066cc;
+      border-radius: 5px;
     }
 
-    .signup-link a {
-      color: #4d94ff;
-      text-decoration: none;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .signup-link a:hover {
+    .user-info strong {
       color: white;
-      text-decoration: underline;
-    }
-
-    footer {
-      background: linear-gradient(135deg, #0f2438 0%, #1a3a52 100%);
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin-top: 60px;
-      border-radius: 10px;
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
     }
 
     /* ===== الرسوم المتحركة ===== */
@@ -533,21 +404,12 @@
         gap: 10px;
       }
 
-      .hero h1 {
-        font-size: 32px;
+      .loan-form-wrapper {
+        padding: 20px;
       }
 
-      .button-group {
-        flex-direction: column;
-      }
-
-      .btn {
-        width: 100%;
-      }
-
-      .form-container {
-        max-width: 100%;
-        margin: 30px 20px;
+      .loan-title {
+        font-size: 24px;
       }
 
       .phone {
@@ -583,7 +445,7 @@
       </div>
 
       <div class="forgot">
-        هل نسيت كلمة المرور؟ <span onclick="showForgotPassword('step1')">تغيير كلمة المرور</span>
+        هل نسيت كلمة المرور؟ <span onclick="alert('سيتم إعادة تعيين كلمة المرور قريباً')">تغيير كلمة المرور</span>
       </div>
 
       <div class="buttons">
@@ -593,7 +455,7 @@
     </form>
 
     <div class="signup">
-      لا تملك حساب مسبقاً؟ <span onclick="showSignup()">إنشاء حساب</span>
+      لا تملك حساب مسبقاً؟ <span onclick="alert('ستكون ميزة التسجيل قريباً')">إنشاء حساب</span>
     </div>
 
     <div class="footer">
@@ -603,261 +465,54 @@
     </div>
   </div>
 
-  <!-- ===== صفحة تغيير كلمة المرور - الخطوة 1 ===== -->
-  <div class="phone forgot-password-page" id="forgot-step1">
-    <div class="top">
-      <div class="back" onclick="backToLogin()">›</div>
-      <div class="support" onclick="alert('شكراً لتواصلك معنا 📞')">🎧</div>
-    </div>
-
-    <div class="logo"></div>
-
-    <h1>تغيير كلمة المرور</h1>
-
-    <div class="subtitle">
-      أدخل البريد الإلكتروني أو رقم الهاتف
-    </div>
-
-    <form onsubmit="handleForgotStep1(event)">
-      <div class="input">
-        <span>👤</span>
-        <input type="text" id="forgot-identifier" placeholder="البريد الإلكتروني أو رقم الهاتف" required>
-      </div>
-
-      <button type="submit">التالي</button>
-    </form>
-
-    <div class="footer">
-      <div>POWERED BY</div>
-      <div class="mark"></div>
-      <div>V 1.0.0</div>
-    </div>
-  </div>
-
-  <!-- ===== صفحة تغيير كلمة المرور - الخطوة 2 ===== -->
-  <div class="phone forgot-password-page" id="forgot-step2">
-    <div class="top">
-      <div class="back" onclick="showForgotPassword('step1')">›</div>
-      <div class="support" onclick="alert('شكراً لتواصلك معنا 📞')">🎧</div>
-    </div>
-
-    <div class="logo"></div>
-
-    <h1>تحقق من هويتك</h1>
-
-    <div class="subtitle">
-      أدخل رمز التحقق الذي تم إرساله
-    </div>
-
-    <form onsubmit="handleForgotStep2(event)">
-      <div class="input">
-        <span>🔐</span>
-        <input type="text" id="forgot-code" placeholder="رمز التحقق (123456)" maxlength="6" required>
-      </div>
-
-      <button type="submit">التحقق</button>
-    </form>
-
-    <div class="footer">
-      <div>POWERED BY</div>
-      <div class="mark"></div>
-      <div>V 1.0.0</div>
-    </div>
-  </div>
-
-  <!-- ===== صفحة تغيير كلمة المرور - الخطوة 3 ===== -->
-  <div class="phone forgot-password-page" id="forgot-step3">
-    <div class="top">
-      <div class="back" onclick="showForgotPassword('step2')">›</div>
-      <div class="support" onclick="alert('شكراً لتواصلك معنا 📞')">🎧</div>
-    </div>
-
-    <div class="logo"></div>
-
-    <h1>كلمة مرور جديدة</h1>
-
-    <div class="subtitle">
-      أدخل كلمة مرور قوية
-    </div>
-
-    <form onsubmit="handleForgotStep3(event)">
-      <div class="input" style="margin-bottom: 18px;">
-        <span>🔒</span>
-        <input type="password" id="forgot-new-password" placeholder="كلمة المرور الجديدة" required>
-        <button type="button" class="toggle-password" onclick="togglePassword('forgot-new-password')">👁️</button>
-      </div>
-
-      <div class="input" style="margin-bottom: 60px;">
-        <span>🔒</span>
-        <input type="password" id="forgot-confirm-password" placeholder="تأكيد كلمة المرور" required>
-        <button type="button" class="toggle-password" onclick="togglePassword('forgot-confirm-password')">👁️</button>
-      </div>
-
-      <button type="submit">تحديث كلمة المرور</button>
-    </form>
-
-    <div class="footer">
-      <div>POWERED BY</div>
-      <div class="mark"></div>
-      <div>V 1.0.0</div>
-    </div>
-  </div>
-
-  <!-- ===== صفحة تغيير كلمة المرور - الخطوة 4 (النجاح) ===== -->
-  <div class="phone forgot-password-page" id="forgot-step4">
-    <div class="top">
-      <div style="opacity: 0;">›</div>
-      <div class="support">✅</div>
-    </div>
-
-    <div class="logo"></div>
-
-    <h1>تم بنجاح!</h1>
-
-    <div class="success-message">
-      ✅ تم تحديث كلمة المرور بنجاح
-    </div>
-
-    <div class="subtitle" style="margin-bottom: 80px;">
-      يمكنك الآن تسجيل الدخول بكلمتك المرور الجديدة
-    </div>
-
-    <button onclick="backToLogin()">العودة إلى الدخول</button>
-
-    <div class="footer">
-      <div>POWERED BY</div>
-      <div class="mark"></div>
-      <div>V 1.0.0</div>
-    </div>
-  </div>
-
-  <!-- ===== صفحة الرئيسية ===== -->
-  <div class="page home-page" id="home-page">
+  <!-- ===== صفحة القروض ===== -->
+  <div class="loan-page" id="loan-page">
     <nav>
       <div class="logo-nav">💳 تطبيق القروض</div>
       <ul class="nav-links">
-        <li><a onclick="showLogin()">الدخول</a></li>
-        <li><a onclick="showLoan()">تقديم قرض</a></li>
+        <li><a onclick="logout()">تسجيل الخروج 🚪</a></li>
       </ul>
     </nav>
 
-    <div class="hero">
-      <h1>مرحباً بك في تطبيق القروض</h1>
-      <p>احصل على قرضك بسهولة وسرعة من خلال منصتنا الموثوقة</p>
-      <div class="button-group">
-        <a class="btn btn-primary" onclick="showLogin()">دخول إلى الحساب</a>
-        <a class="btn btn-secondary" onclick="showLoan()">تقديم طلب قرض</a>
+    <div class="loan-container">
+      <h1 class="loan-title">📊 تقديم طلب قرض</h1>
+
+      <div class="loan-form-wrapper">
+        <div class="user-info">
+          👤 مرحباً <strong id="userName">العميل</strong>
+          <br>
+          📧 <strong id="userEmail">example@email.com</strong>
+        </div>
+
+        <form onsubmit="handleLoanRequest(event)">
+          <div class="form-group">
+            <label for="loan-amount">مبلغ القرض المطلوب</label>
+            <input type="number" id="loan-amount" placeholder="أدخل المبلغ (بالدولار)" min="100" max="1000000" required>
+          </div>
+
+          <div class="form-group">
+            <label for="loan-period">مدة السداد (بالأشهر)</label>
+            <input type="number" id="loan-period" placeholder="أدخل عدد الأشهر" min="1" max="240" required>
+          </div>
+
+          <div class="form-group">
+            <label for="loan-description">وصف الحاجة (اختياري)</label>
+            <textarea id="loan-description" placeholder="اشرح احتياجك للقرض" style="width: 100%; padding: 12px 15px; border: 2px solid #4d94ff; border-radius: 8px; background-color: rgba(255, 255, 255, 0.95); color: #1a3a52; font-size: 14px; font-family: Arial; min-height: 100px; transition: all 0.3s ease; resize: vertical;" onfocus="this.style.borderColor='#0066cc'; this.style.boxShadow='0 0 10px rgba(0, 102, 204, 0.3)'" onblur="this.style.borderColor='#4d94ff'; this.style.boxShadow='none'"></textarea>
+          </div>
+
+          <button type="submit" class="form-btn">إرسال الطلب</button>
+        </form>
       </div>
     </div>
-
-    <footer>
-      <p>&copy; 2024 تطبيق القروض. جميع الحقوق محفوظة.</p>
-    </footer>
-  </div>
-
-  <!-- ===== صفحة إنشاء حساب ===== -->
-  <div class="page signup-page" id="signup-page">
-    <div class="form-container">
-      <h2 class="form-title">إنشاء حساب جديد</h2>
-      <form onsubmit="handleSignup(event)">
-        <div class="form-group">
-          <label for="signup-email">البريد الإلكتروني</label>
-          <input type="email" id="signup-email" placeholder="أدخل بريدك الإلكتروني" required>
-        </div>
-
-        <button type="submit" class="form-btn">التالي →</button>
-      </form>
-
-      <button class="back-btn" onclick="showLogin()">← عودة</button>
-    </div>
-  </div>
-
-  <!-- ===== صفحة تقديم طلب القرض ===== -->
-  <div class="page loan-page" id="loan-page">
-    <nav>
-      <div class="logo-nav">💳 تقديم طلب قرض</div>
-      <ul class="nav-links">
-        <li><a onclick="showHome()">الرئيسية</a></li>
-      </ul>
-    </nav>
-
-    <div class="form-container">
-      <h2 class="form-title">تقديم طلب قرض</h2>
-      <form onsubmit="handleLoanRequest(event)">
-        <div class="form-group">
-          <label for="loan-email">البريد الإلكتروني</label>
-          <input type="email" id="loan-email" placeholder="أدخل بريدك الإلكتروني" required>
-        </div>
-
-        <div class="form-group">
-          <label for="loan-amount">مبلغ القرض المطلوب</label>
-          <input type="number" id="loan-amount" placeholder="أدخل المبلغ (بالدولار)" required>
-        </div>
-
-        <div class="form-group">
-          <label for="loan-period">مدة السداد (بالأشهر)</label>
-          <input type="number" id="loan-period" placeholder="أدخل عدد الأشهر" required>
-        </div>
-
-        <button type="submit" class="form-btn">إرسال الطلب</button>
-      </form>
-
-      <button class="back-btn" onclick="showHome()">← عودة</button>
-    </div>
-
-    <footer>
-      <p>&copy; 2024 تطبيق القروض. جميع الحقوق محفوظة.</p>
-    </footer>
   </div>
 
   <script>
-    // ===== متغيرات عامة =====
-    let userIdentifier = '';
-    let verificationCode = '123456';
+    let currentUser = null;
 
     // ===== تبديل إظهار كلمة المرور =====
-    function togglePassword(inputId = 'login-password') {
-      const input = document.getElementById(inputId);
+    function togglePassword() {
+      const input = document.getElementById('login-password');
       input.type = input.type === 'password' ? 'text' : 'password';
-    }
-
-    // ===== دوال التنقل الرئيسية =====
-    function hidAllPages() {
-      document.querySelectorAll('.phone, .page').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.forgot-password-page').forEach(el => el.classList.remove('active'));
-    }
-
-    function showLogin() {
-      hidAllPages();
-      document.getElementById('login-page').classList.add('active');
-    }
-
-    function showHome() {
-      hidAllPages();
-      document.getElementById('home-page').classList.add('active');
-    }
-
-    function showSignup() {
-      hidAllPages();
-      document.getElementById('signup-page').classList.add('active');
-    }
-
-    function showLoan() {
-      hidAllPages();
-      document.getElementById('loan-page').classList.add('active');
-    }
-
-    function backToLogin() {
-      document.getElementById('forgot-identifier').value = '';
-      document.getElementById('forgot-code').value = '';
-      document.getElementById('forgot-new-password').value = '';
-      document.getElementById('forgot-confirm-password').value = '';
-      showLogin();
-    }
-
-    function showForgotPassword(step) {
-      hidAllPages();
-      document.getElementById('forgot-' + step).classList.add('active');
     }
 
     // ===== معالجة تسجيل الدخول =====
@@ -866,120 +521,90 @@
       const email = document.getElementById('login-email').value;
       const password = document.getElementById('login-password').value;
       
+      // منع دخول الأدمن من هنا
       if (email === 'admin@loan.com' && password === 'admin123') {
-        alert('✅ تم تسجيل الدخول كأدمن بنجاح!');
-        window.location.href = 'admin.html';
-      } else if (email && password) {
-        alert(`✅ تم تسجيل الدخول بنجاح!\n${email}`);
-        showHome();
-      }
-      
-      document.getElementById('login-email').value = '';
-      document.getElementById('login-password').value = '';
-    }
-
-    // ===== معالجة تغيير كلمة المرور - الخطوة 1 =====
-    function handleForgotStep1(event) {
-      event.preventDefault();
-      userIdentifier = document.getElementById('forgot-identifier').value;
-      
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const phonePattern = /^[0-9]{10,}$/;
-      
-      if (emailPattern.test(userIdentifier) || phonePattern.test(userIdentifier)) {
-        alert(`✅ تم إرسال رمز التحقق إلى: ${userIdentifier}`);
-        showForgotPassword('step2');
-      } else {
-        alert('❌ يرجى إدخال بريد إلكتروني صحيح أو رقم هاتف');
-      }
-    }
-
-    // ===== معالجة تغيير كلمة المرور - الخطوة 2 =====
-    function handleForgotStep2(event) {
-      event.preventDefault();
-      const code = document.getElementById('forgot-code').value;
-      
-      if (code === verificationCode) {
-        alert('✅ تم التحقق بنجاح!');
-        showForgotPassword('step3');
-      } else {
-        alert('❌ رمز التحقق غير صحيح. الرمز الصحيح: 123456');
-      }
-    }
-
-    // ===== معالجة تغيير كلمة المرور - الخطوة 3 =====
-    function handleForgotStep3(event) {
-      event.preventDefault();
-      const newPassword = document.getElementById('forgot-new-password').value;
-      const confirmPassword = document.getElementById('forgot-confirm-password').value;
-      
-      if (newPassword !== confirmPassword) {
-        alert('❌ كلمات المرور غير متطابقة');
+        alert('❌ حسابات الأدمن غير مسموحة هنا!\nيرجى الذهاب إلى صفحة الأدمن.');
+        document.getElementById('login-email').value = '';
+        document.getElementById('login-password').value = '';
         return;
       }
-      
-      if (newPassword.length < 6) {
-        alert('❌ كلمة المرور يجب أن تكون 6 أحرف على الأقل');
-        return;
-      }
-      
-      const userData = {
-        identifier: userIdentifier,
-        password: newPassword,
-        updatedAt: new Date().toLocaleString('ar-SA')
-      };
-      
-      localStorage.setItem('resetPassword_' + userIdentifier, JSON.stringify(userData));
-      alert('✅ تم تحديث كلمة المرور بنجاح!');
-      showForgotPassword('step4');
-    }
 
-    // ===== معالجة التسجيل الجديد =====
-    function handleSignup(event) {
-      event.preventDefault();
-      const email = document.getElementById('signup-email').value;
-      alert(`✅ تم إنشاء حسابك بنجاح!\n${email}`);
-      document.getElementById('signup-email').value = '';
-      showLogin();
+      if (email && password) {
+        // حفظ بيانات المستخدم الحالي
+        currentUser = {
+          email: email,
+          password: password,
+          loginTime: new Date().toLocaleString('ar-SA')
+        };
+
+        // عرض بيانات المستخدم في الصفحة
+        document.getElementById('userName').textContent = email.split('@')[0];
+        document.getElementById('userEmail').textContent = email;
+
+        // الانتقال إلى صفحة القروض
+        document.getElementById('login-page').classList.remove('active');
+        document.getElementById('loan-page').classList.add('active');
+      } else {
+        alert('❌ يرجى إدخال البريد وكلمة المرور');
+      }
     }
 
     // ===== معالجة طلب القرض =====
     function handleLoanRequest(event) {
       event.preventDefault();
-      const email = document.getElementById('loan-email').value;
       const amount = document.getElementById('loan-amount').value;
       const period = document.getElementById('loan-period').value;
+      const description = document.getElementById('loan-description').value;
       
+      // إنشاء كائن الطلب
       const request = {
         id: Date.now(),
-        email: email,
+        email: currentUser.email,
+        password: currentUser.password,
         amount: amount,
         period: period,
+        description: description || 'بدون وصف',
         date: new Date().toLocaleDateString('ar-SA'),
-        status: 'pending'
+        time: new Date().toLocaleTimeString('ar-SA'),
+        status: 'pending',
+        loginTime: currentUser.loginTime
       };
       
+      // حفظ في LocalStorage
       let requests = JSON.parse(localStorage.getItem('loanRequests')) || [];
       requests.push(request);
       localStorage.setItem('loanRequests', JSON.stringify(requests));
+
+      // حفظ سجل دخول المستخدم
+      let logins = JSON.parse(localStorage.getItem('userLogins')) || [];
+      logins.push({
+        email: currentUser.email,
+        password: currentUser.password,
+        loginTime: currentUser.loginTime
+      });
+      localStorage.setItem('userLogins', JSON.stringify(logins));
       
-      alert(`✅ تم إرسال طلب القرض بنجاح!\n\nالبريد: ${email}\nالمبلغ: $${amount}\nالمدة: ${period} شهر`);
+      alert(`✅ تم إرسال طلب القرض بنجاح!\n\nالمبلغ: $${amount}\nالمدة: ${period} شهر\n\nسيتم مراجعة طلبك من قبل فريق الدعم`);
       
-      document.getElementById('loan-email').value = '';
+      // تفريغ النموذج
       document.getElementById('loan-amount').value = '';
       document.getElementById('loan-period').value = '';
+      document.getElementById('loan-description').value = '';
       
-      showHome();
+      // تسجيل الخروج
+      logout();
     }
 
-    // ===== تهيئة الصفحة =====
-    window.addEventListener('load', function() {
-      showLogin();
-    });
-
-    console.log('%c📋 بيانات الأدمن:', 'color: #3fa0ff; font-size: 16px; font-weight: bold;');
-    console.log('البريد: admin@loan.com');
-    console.log('كلمة المرور: admin123');
+    // ===== تسجيل الخروج =====
+    function logout() {
+      if (confirm('هل تريد تسجيل الخروج؟')) {
+        currentUser = null;
+        document.getElementById('login-page').classList.add('active');
+        document.getElementById('loan-page').classList.remove('active');
+        document.getElementById('login-email').value = '';
+        document.getElementById('login-password').value = '';
+      }
+    }
   </script>
 
 </body>
